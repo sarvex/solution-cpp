@@ -1,16 +1,21 @@
 #include <unordered_map>
 #include <vector>
 
+using std::unordered_map;
+using std::vector;
+
 class Solution {
 public:
-  static std::vector<int> twoSum(const std::vector<int> &nums, const int target) {
-    std::unordered_map<int, int> map;
+  static auto twoSum(const vector<int> &nums, const int target) -> vector<int> {
+    unordered_map<int, int> map;
+
     for (auto i = 0;; ++i) {
       auto x = nums[i];
-      if (int y = target - x; map.contains(y)) {
-        return {map[y], i};
-      }
-      map[x] = i;
+
+      if (auto search = map.find(target - x); search != map.end())
+        return {search->second, i};
+      else
+        map.emplace(x, i);
     }
   }
 };

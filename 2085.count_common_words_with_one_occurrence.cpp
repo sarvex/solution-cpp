@@ -11,11 +11,12 @@ class Solution {
 public:
   static int countWords(const vector<string> &words1, const vector<string> &words2) {
 
-    unordered_set<string> result = {words1.begin(), words1.end()};
-    result.insert(words2.begin(), words2.end());
-    std::cout << result << std::endl;
+    unordered_set<string> set1 = {words1.begin(), words1.end()};
+    int result = words1.size() - set.size();
 
-    return words1.size() + words2.size() - result.size();
+    unordered_set<string> set2 = {words2.begin(), words2.end()};
+
+    return result + words2.size() - set2.size();
 
   }
 };
