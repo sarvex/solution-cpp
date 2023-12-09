@@ -1,37 +1,34 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+#include <vector>
+
+using std::vector;
+
+struct TreeNode {
+  int val;
+  TreeNode *left;
+  TreeNode *right;
+  TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  explicit TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
+};
+
 class Solution {
 public:
-    vector<int> inorderTraversal(TreeNode* root) {
-        vector<int> ans;
-        while (root) {
-            if (!root->left) {
-                ans.push_back(root->val);
-                root = root->right;
-            } else {
-                TreeNode* prev = root->left;
-                while (prev->right and prev->right != root) {
-                    prev = prev->right;
-                }
-                if (!prev->right) {
-                    prev->right = root;
-                    root = root->left;
-                } else {
-                    ans.push_back(root->val);
-                    prev->right = nullptr;
-                    root = root->right;
-                }
-            }
-        }
-        return ans;
+  auto inorderTraversal(const TreeNode *root) {
+    vector<int> result;
+
+    if (root == nullptr)
+      return result;
+
+    if (root->left) {
+      result = inorderTraversal(root->left);
     }
+    result.emplace_back(root->val);
+
+    if (root->right != nullptr) {
+      result.append_range(inorderTraversal(root->right));
+    }
+
+    return result;
+  }
 };

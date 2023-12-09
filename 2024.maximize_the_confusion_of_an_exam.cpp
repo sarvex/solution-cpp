@@ -1,7 +1,11 @@
+#include <string>
+
+using std::string;
+
 class Solution {
 public:
     int maxConsecutiveAnswers(string answerKey, int k) {
-        return max(get('T', k, answerKey), get('F', k, answerKey));
+        return std::max(get('T', k, answerKey), get('F', k, answerKey));
     }
 
     int get(char c, int k, string& answerKey) {

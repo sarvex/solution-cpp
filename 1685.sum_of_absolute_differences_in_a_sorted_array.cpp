@@ -1,14 +1,21 @@
+#include <vector>
+#include <numeric>
+
+using std::vector;
+using std::reduce;
+
 class Solution {
 public:
-    vector<int> getSumAbsoluteDifferences(vector<int>& nums) {
-        int s = accumulate(nums.begin(), nums.end(), 0), t = 0;
-        int n = nums.size();
-        vector<int> ans(n);
+    static auto getSumAbsoluteDifferences(vector<int>& nums) {
+        auto sum = reduce(nums.cbegin(), nums.cend());
+        auto n = nums.size();
+        vector<int> result(n);
+
         for (int i = 0; i < n; ++i) {
-            int v = nums[i] * i - t + s - t - nums[i] * (n - i);
-            ans[i] = v;
-            t += nums[i];
+          result[i] = sum - nums[i] * (n - 2 * i);
+          sum -= 2 * nums[i];
         }
-        return ans;
+
+        return result;
     }
 };

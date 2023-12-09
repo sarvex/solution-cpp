@@ -1,12 +1,15 @@
 #include <string>
 #include <vector>
 
+using std::string;
+using std::vector;
+
 class Solution {
 public:
-  static std::string longestPalindrome(const std::string &s) {
+  static string longestPalindrome(const string &s) {
     const int n = s.size();
 
-    std::vector f(n, std::vector(n, true));
+    vector f(n, std::vector(n, true));
     int k = 0, mx = 1;
     for (int i = n - 2; ~i; --i) {
       for (int j = i + 1; j < n; ++j) {

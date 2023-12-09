@@ -1,7 +1,9 @@
 class Solution {
 public:
     int totalMoney(int n) {
-        int a = n / 7, b = n % 7;
-        return (28 + 28 + 7 * (a - 1)) * a / 2 + (a * 2 + b + 1) * b / 2;
+        int weeks = n / 7;
+        int days = n % 7;
+
+        return ((weeks * (56 + 7 * (weeks - 1)) / 2) + (days * ( 2 * weeks + days + 1) / 2));
     }
 };

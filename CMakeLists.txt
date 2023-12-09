@@ -2476,3 +2476,5 @@ add_executable(solution main.cpp
     2939.maximum_xor_product.cpp
     2940.find_building_where_alice_and_bob_can_meet.cpp
     2941.maximum_gcd_sum_of_a_subarray.cpp)
+
+add_executable(0058.length_of_last_word 0058.length_of_last_word.cpp)

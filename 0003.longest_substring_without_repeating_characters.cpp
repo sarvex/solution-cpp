@@ -1,22 +1,24 @@
+#include <algorithm>
 #include <string>
-#include <unordered_set>
+#include <vector>
 
 using std::string;
-using std::unordered_set;
+using std::vector;
 
 class Solution {
 public:
-  static int lengthOfLongestSubstring(string s) {
-    auto result = 0;
-    unordered_set<char> substring;
-
-    for (int i = 0, j = 0; j < s.size(); ++j) {
-      while (substring.contains(s[j]))
-        substring.erase(s[i++]);
-      substring.insert(s[j]);
-      result = std::max(result, j - i + 1);
+  auto lengthOfLongestSubstring(const string &s) {
+    int start = 0;
+    int result = 0;
+    vector<int> pos(128, -1);
+    for (int i = 0; i < s.length(); i++) {
+      if (pos[s[i]] == -1 || pos[s[i]] < start) {
+        result = std::max(result, i - start + 1);
+      } else {
+        start = pos[s[i]] + 1;
+      }
+      pos[s[i]] = i;
     }
-
     return result;
   }
 };
