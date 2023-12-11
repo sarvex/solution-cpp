@@ -1,14 +1,12 @@
+#include <algorithm>
 #include <vector>
+
+using std::vector;
 
 class Solution {
 public:
-  static int removeElement(std::vector<int>& nums, const int val) {
-    auto k = 0;
-    for (const auto x: nums) {
-      if (x != val) {
-        nums[k++] = x;
-      }
-    }
-    return k;
+  auto removeElement(vector<int> &nums, const int val) {
+    nums.erase(remove(nums.begin(), nums.end(), val), nums.end());
+    return nums.size();
   }
 };

@@ -1,8 +1,12 @@
 #include <string>
+#include <vector>
+
+using std::string;
+using std::vector;
 
 class Solution {
 public:
-  static bool isMatch(const std::string& s, const std::string& p) {
+  static auto isMatch(const std::string& s, const std::string& p) {
     const int m = s.size();
     const int n = p.size();
 

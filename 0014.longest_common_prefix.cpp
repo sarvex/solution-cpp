@@ -1,9 +1,12 @@
 #include <string>
 #include <vector>
 
+using std::string;
+using std::vector;
+
 class Solution {
 public:
-  static std::string longestCommonPrefix(std::vector<std::string>& strs) {
+  auto longestCommonPrefix(const vector<string>& strs) {
     const int n = strs.size();
     for (int i = 0; i < strs[0].size(); ++i) {
       for (int j = 1; j < n; ++j) {

@@ -6,7 +6,7 @@ using std::vector;
 
 class Solution {
 public:
-  static auto twoSum(const vector<int>& nums, const int target) -> vector<int> {
+  auto twoSum(const vector<int>& nums, const int target) -> vector<int> {
     unordered_map<int, int> map;
 
     for (auto i = 0;; ++i) {

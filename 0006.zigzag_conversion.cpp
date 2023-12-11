@@ -1,15 +1,17 @@
 #include <string>
 
+using std::string;
+
 class Solution {
 public:
-  static std::string convert(std::string s, const int numRows) {
+  auto convert(const string& s, const int numRows) {
     if (numRows == 1) return s;
-    std::string result;
+    string result;
     const int group = 2 * numRows - 2;
     for (auto i = 1; i <= numRows; ++i) {
       int interval = i == numRows ? group : 2 * numRows - 2 * i;
       int idx = i - 1;
-      while (idx < s.length()) {
+      while (idx < s.size()) {
         result.push_back(s[idx]);
         idx += interval;
         interval = group - interval;

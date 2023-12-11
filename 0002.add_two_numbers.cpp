@@ -8,8 +8,8 @@ struct ListNode {
 
 class Solution {
 public:
-  static ListNode *addTwoNumbers(const ListNode *l1, const ListNode *l2) {
-    constexpr int decimal = 10;
+  auto addTwoNumbers(const ListNode* l1, const ListNode* l2) {
+    const int decimal = 10;
 
     ListNode result{0};
     auto node = &result;

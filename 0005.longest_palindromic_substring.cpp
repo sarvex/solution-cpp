@@ -6,7 +6,7 @@ using std::vector;
 
 class Solution {
 public:
-  static string longestPalindrome(const string &s) {
+  auto longestPalindrome(const string& s) {
     const int n = s.size();
 
     vector f(n, std::vector(n, true));

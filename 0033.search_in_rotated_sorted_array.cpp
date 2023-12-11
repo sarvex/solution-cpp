@@ -1,8 +1,10 @@
 #include <vector>
 
+using std::vector;
+
 class Solution {
 public:
-  int search(std::vector<int> &nums, int target) {
+  auto search(vector<int> &nums, int target) {
     int n = nums.size();
     int left = 0, right = n - 1;
     while (left < right) {

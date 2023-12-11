@@ -9,17 +9,17 @@ struct ListNode {
 class Solution {
 public:
   static ListNode* swapPairs(ListNode* head) {
-    ListNode* dummy = new ListNode(0, head);
-    ListNode* pre = dummy;
-    ListNode* cur = head;
-    while (cur and cur->next) {
-      ListNode* t = cur->next;
-      cur->next = t->next;
-      t->next = cur;
-      pre->next = t;
-      pre = cur;
-      cur = cur->next;
+    ListNode dummy {0, head};
+    ListNode* pre = &dummy;
+    ListNode* node = head;
+    while (node and node->next) {
+      ListNode* temp = node->next;
+      node->next = temp->next;
+      temp->next = node;
+      pre->next = temp;
+      pre = node;
+      node = node->next;
     }
-    return dummy->next;
+    return dummy.next;
   }
 };

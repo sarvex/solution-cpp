@@ -2,31 +2,31 @@ struct ListNode {
   int val;
   ListNode *next;
   ListNode() : val(0), next(nullptr) {}
-  ListNode(int x) : val(x), next(nullptr) {}
+  explicit ListNode(int x) : val(x), next(nullptr) {}
   ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
 class Solution {
 public:
-  ListNode *reverseBetween(ListNode *head, int left, int right) {
+  auto reverseBetween(ListNode *head, int left, int right) {
     if (!head->next or left == right) {
       return head;
     }
-    ListNode *dummy = new ListNode(0, head);
-    ListNode *pre = dummy;
+    ListNode dummy{0, head};
+    ListNode *pre = &dummy;
     for (int i = 0; i < left - 1; ++i) {
       pre = pre->next;
     }
     ListNode *p = pre, *q = pre->next;
-    ListNode *cur = q;
+    ListNode *node = q;
     for (int i = 0; i < right - left + 1; ++i) {
-      ListNode *t = cur->next;
-      cur->next = pre;
-      pre = cur;
-      cur = t;
+      ListNode *t = node->next;
+      node->next = pre;
+      pre = node;
+      node = t;
     }
     p->next = pre;
-    q->next = cur;
-    return dummy->next;
+    q->next = node;
+    return dummy.next;
   }
 };

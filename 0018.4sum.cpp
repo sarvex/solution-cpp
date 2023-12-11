@@ -1,15 +1,18 @@
 #include <algorithm>
 #include <vector>
 
+using std::ranges::sort;
+using std::vector;
+
 class Solution {
 public:
-  static std::vector<std::vector<int>> fourSum(std::vector<int> &nums, const int target) {
+  auto fourSum(vector<int> &nums, const int target) {
     const int n = nums.size();
-    std::vector<std::vector<int>> result;
+    vector<vector<int>> result;
     if (n < 4) {
       return result;
     }
-    std::ranges::sort(nums);
+    sort(nums);
     for (auto i = 0; i < n - 3; ++i) {
       if (i and nums[i] == nums[i - 1]) {
         continue;

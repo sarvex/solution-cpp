@@ -1,8 +1,13 @@
 #include <vector>
+#include <algorithm>
+
+using std::max;
+using std::min;
+using std::vector;
 
 class Solution {
 public:
-  static int maxArea(const std::vector<int>& height) {
+  auto maxArea(const vector<int>& height) {
     int i = 0;
     int j = height.size() - 1;
     int result = 0;

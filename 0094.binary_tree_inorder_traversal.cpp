@@ -25,9 +25,11 @@ public:
     }
     result.emplace_back(root->val);
 
+    vector<int> temp;
     if (root->right != nullptr) {
-      result.append_range(inorderTraversal(root->right));
+      temp = inorderTraversal(root->right);
     }
+    result.insert(result.end(), temp.cbegin(), temp.cend());
 
     return result;
   }

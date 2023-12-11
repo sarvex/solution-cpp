@@ -1,11 +1,14 @@
 #include <algorithm>
 #include <vector>
 
+using std::vector;
+using std::ranges::sort;
+
 class Solution {
 public:
-  static std::vector<std::vector<int>> threeSum(std::vector<int>& nums) {
-    std::ranges::sort(nums);
-    std::vector<std::vector<int>> result;
+  auto threeSum(vector<int>& nums) {
+    sort(nums);
+    vector<vector<int>> result;
     const int n = nums.size();
     for (int i = 0; i < n - 2 and nums[i] <= 0; ++i) {
       if (i and nums[i] == nums[i - 1]) {

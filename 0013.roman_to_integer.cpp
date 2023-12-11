@@ -1,10 +1,13 @@
 #include <string>
 #include <unordered_map>
 
+using std::string;
+using std::unordered_map;
+
 class Solution {
 public:
-  static int romanToInt(const std::string& s) {
-    std::unordered_map<char, int> nums{
+  auto romanToInt(const string& s) {
+    unordered_map<char, int> nums{
       {'I', 1},
       {'V', 5},
       {'X', 10},

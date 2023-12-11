@@ -1,21 +1,22 @@
+#include <algorithm>
 #include <functional>
 #include <vector>
 
-using std::vector;
+using std::min;
 using std::function;
+using std::vector;
 
 class Solution {
 public:
-  static double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2) {
-    const int m = nums1.size();
-    const int n = nums2.size();
+  auto findMedianSortedArrays(const vector<int>& nums1, const vector<int>& nums2) {
+    const auto m = nums1.size();
+    const auto n = nums2.size();
 
-    function<int(int, int, int)> f = [&](const int i, const int j,
-                                              const int k) {
+    function<int(int,int,int)> f = [&](const int i, const int j, const int k) {
       if (i >= m) return nums2[j + k - 1];
       if (j >= n) return nums1[i + k - 1];
 
-      if (k == 1) return std::min(nums1[i], nums2[j]);
+      if (k == 1) return min(nums1[i], nums2[j]);
 
       const int p = k / 2;
       const int x = i + p - 1 < m ? nums1[i + p - 1] : 1 << 30;

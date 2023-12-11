@@ -1,16 +1,21 @@
 #include <cmath>
 #include <cstdint>
+#include <limits>
+
+using std::abs;
+using std::numeric_limits;
+
 
 class Solution {
 public:
-  static int divide(const int a, const int b) {
+  auto divide(const int a, const int b) {
     auto sign = 1;
     if (a < 0 xor b < 0) {
       sign = -1;
     }
 
-    auto x = std::abs(static_cast<long long>(a));
-    auto y = std::abs(static_cast<long long>(b));
+    auto x = abs(static_cast<int16_t>(a));
+    auto y = abs(static_cast<int16_t>(b));
     auto total = 0ll;
     while (x >= y) {
       auto count = 0;
@@ -22,9 +27,9 @@ public:
     }
 
     if (const auto result = sign * total;
-      result >= std::numeric_limits<int32_t>::min() and result <= std::numeric_limits<int32_t>::max()) {
+      result >= numeric_limits<int32_t>::min() and result <= numeric_limits<int32_t>::max()) {
       return static_cast<int>(result);
     }
-    return std::numeric_limits<int32_t>::max();
+    return numeric_limits<int32_t>::max();
   }
 };

@@ -1,7 +1,10 @@
 #include <vector>
+
+using std::vector;
+
 class Solution {
 public:
-  int searchInsert(std::vector<int> &nums, int target) {
+  auto searchInsert(const vector<int>& nums, const int target) {
     int left = 0, right = nums.size();
     while (left < right) {
       int mid = (left + right) >> 1;

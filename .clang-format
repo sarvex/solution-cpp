@@ -15,7 +15,7 @@ AlwaysBreakAfterDefinitionReturnType: false
 AlwaysBreakTemplateDeclarations: Yes
 BinPackArguments: false
 BinPackParameters: false
-BraceWrapping: 
+BraceWrapping:
   AfterCaseLabel: false
   AfterClass: false
   AfterControlStatement: false
@@ -38,7 +38,7 @@ BreakConstructorInitializers: AfterColon
 ColumnLimit: 120
 CompactNamespaces: true
 Cpp11BracedListStyle: false
-IncludeCategories: 
+IncludeCategories:
   - Regex: '^<.*'
     Priority: 1
   - Regex: '^".*'
@@ -54,6 +54,7 @@ MacroBlockBegin: ''
 MacroBlockEnd: ''
 NamespaceIndentation: Inner
 PointerAlignment: Left
+ReferenceAlignment: Left
 SeparateDefinitionBlocks: Always
 SpaceAfterCStyleCast: true
 SpaceAfterLogicalNot: true
@@ -61,5 +62,6 @@ SpaceBeforeCpp11BracedList: true
 SpaceBeforeJsonColon: true
 SpaceBeforeRangeBasedForLoopColon: false
 SpacesInAngles: false
+SpaceAroundPointerQualifiers: Left
 TabWidth: 2
 ...

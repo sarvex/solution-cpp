@@ -1,9 +1,16 @@
+#include <algorithm>
+#include <vector>
+
+using std::sort;
+using std::vector;
+
 class Solution {
 public:
-    int maxCoins(vector<int>& piles) {
-        sort(piles.begin(), piles.end());
-        int ans = 0;
-        for (int i = piles.size() - 2; i >= (int) piles.size() / 3; i -= 2) ans += piles[i];
-        return ans;
-    }
+  auto maxCoins(vector<int> &piles) {
+    sort(piles.begin(), piles.end());
+    int ans = 0;
+    for (auto i = piles.size() / 3; i < piles.size() ; i += 2)
+      ans += piles[i];
+    return ans;
+  }
 };

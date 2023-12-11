@@ -1,11 +1,14 @@
 #include <vector>
 
+using std::vector;
+
 class Solution {
 public:
-  bool isValidSudoku(std::vector<std::vector<char>> &board) {
-    std::vector<std::vector<bool>> row(9, std::vector<bool>(9, false));
-    std::vector<std::vector<bool>> col(9, std::vector<bool>(9, false));
-    std::vector<std::vector<bool>> sub(9, std::vector<bool>(9, false));
+  auto isValidSudoku(vector<vector<char>>& board) -> bool {
+    vector<vector<bool>> row(9, vector<bool>(9, false));
+    vector<vector<bool>> col(9, vector<bool>(9, false));
+    vector<vector<bool>> sub(9, vector<bool>(9, false));
+
     for (int i = 0; i < 9; ++i) {
       for (int j = 0; j < 9; ++j) {
         char c = board[i][j];

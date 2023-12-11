@@ -1,6 +1,9 @@
 #include <queue>
 #include <vector>
 
+using std::priority_queue;
+using std::vector;
+
 struct ListNode {
   int val;
   ListNode* next;
@@ -11,8 +14,8 @@ struct ListNode {
 
 class Solution {
 public:
-  static ListNode* mergeKLists(const std::vector<ListNode *>& lists) {
-    std::priority_queue<ListNode *, std::vector<ListNode *>,
+  auto mergeKLists(const vector<ListNode *>& lists) {
+    priority_queue<ListNode *, vector<ListNode *>,
       decltype([](const ListNode* a, const ListNode* b) { return a->val > b->val; })> pq;
 
     for (auto head: lists) {
@@ -20,8 +23,9 @@ public:
         pq.push(head);
       }
     }
-    ListNode* dummy = new ListNode();
-    ListNode* cur = dummy;
+
+    ListNode dummy {0};
+    ListNode* cur = &dummy;
     while (!pq.empty()) {
       ListNode* node = pq.top();
       pq.pop();
@@ -31,6 +35,6 @@ public:
       cur->next = node;
       cur = cur->next;
     }
-    return dummy->next;
+    return dummy.next;
   }
 };

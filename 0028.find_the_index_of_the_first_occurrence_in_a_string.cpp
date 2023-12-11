@@ -1,9 +1,12 @@
 ﻿#include <string>
 #include <vector>
 
+using std::string;
+using std::vector;
+
 class Solution {
-  static std::vector<int> next(std::string str) {
-    std::vector<int> n(str.length());
+  auto next(string str) {
+    vector<int> n(str.length());
     n[0] = -1;
     int i = 0, pre = -1;
     int len = str.length();
@@ -22,11 +25,11 @@ class Solution {
   }
 
 public:
-  static int strStr(const std::string& haystack, const std::string& needle) {
+  auto strStr(const string& haystack, const string& needle) {
     if (needle.empty())
       return 0;
 
-    const std::vector n(next(needle));
+    const vector n(next(needle));
 
     const int len = haystack.length() - needle.length() + 1;
     for (auto i = 0; i < len; ++i) {

@@ -11,7 +11,7 @@ using std::ranges::sort;
 
 class Solution {
 public:
-  vector<vector<int>> merge(vector<vector<int>> &intervals) {
+  auto merge(vector<vector<int>> &intervals) {
     if (intervals.size() < 2)
       return intervals;
 

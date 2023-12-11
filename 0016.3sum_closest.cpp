@@ -1,10 +1,15 @@
 #include <algorithm>
+#include <cmath>
 #include <vector>
+
+using std::abs;
+using std::vector;
+using std::ranges::sort;
 
 class Solution {
 public:
-  static int threeSumClosest(std::vector<int>& nums, int target) {
-    std::ranges::sort(nums);
+  auto threeSumClosest(vector<int>& nums, int target) {
+    sort(nums);
     int result = 1 << 30;
     const int n = nums.size();
     for (int i = 0; i < n; ++i) {
