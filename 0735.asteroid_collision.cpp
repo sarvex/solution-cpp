@@ -1,21 +1,24 @@
+#include <vector>
+
+using std::vector;
+
 class Solution {
 public:
-    vector<int> asteroidCollision(vector<int>& asteroids) {
-        vector<int> stk;
-        for (int x : asteroids) {
-            if (x > 0) {
-                stk.push_back(x);
-            } else {
-                while (stk.size() and stk.back() > 0 and stk.back() < -x) {
-                    stk.pop_back();
-                }
-                if (stk.size() and stk.back() == -x) {
-                    stk.pop_back();
-                } else if (stk.empty() or stk.back() < 0) {
-                    stk.push_back(x);
-                }
-            }
+  vector<int> asteroidCollision(vector<int> &asteroids) {
+    vector<int> result;
+    for (auto asteroid : asteroids) {
+      if (result.empty() or asteroid > 0 or result.back() < 0) {
+        result.push_back(asteroid);
+      } else {
+        while (not result.empty() and result.back() > 0 and result.back() < -asteroid)
+          result.pop_back();
+        if (not result.empty() and result.back() == -asteroid) {
+          result.pop_back();
+        } else if (result.empty() or result.back() < 0) {
+          result.push_back(asteroid);
         }
-        return stk;
+      }
     }
+    return result;
+  }
 };

@@ -2,23 +2,21 @@
 Language: Cpp
 BasedOnStyle: LLVM
 AlignAfterOpenBracket: AlwaysBreak
-AlignConsecutiveAssignments: true
-AlignConsecutiveDeclarations: true
-AlignOperands: true
+AlignOperands: AlignAfterOperator
 AlignTrailingComments: false
-AllowShortBlocksOnASingleLine: true
+AllowShortBlocksOnASingleLine: Always
 AllowShortCaseLabelsOnASingleLine: true
 AllowShortCompoundRequirementOnASingleLine: true
-AllowShortIfStatementsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
 AllowShortLoopsOnASingleLine: true
-AlwaysBreakAfterDefinitionReturnType: false
+AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakTemplateDeclarations: Yes
 BinPackArguments: false
 BinPackParameters: false
 BraceWrapping:
   AfterCaseLabel: false
   AfterClass: false
-  AfterControlStatement: false
+  AfterControlStatement: Never
   AfterEnum: false
   AfterFunction: false
   AfterNamespace: false
@@ -39,19 +37,19 @@ ColumnLimit: 120
 CompactNamespaces: true
 Cpp11BracedListStyle: false
 IncludeCategories:
-  - Regex: '^<.*'
+  - Regex: "^<.*"
     Priority: 1
   - Regex: '^".*'
     Priority: 2
-  - Regex: '.*'
+  - Regex: ".*"
     Priority: 3
-IncludeIsMainRegex: '([-_](test|unittest))?$'
+IncludeIsMainRegex: "([-_](test|unittest))?$"
 IndentAccessModifiers: true
 IndentCaseLabels: true
 InsertNewlineAtEOF: true
 LineEnding: LF
-MacroBlockBegin: ''
-MacroBlockEnd: ''
+MacroBlockBegin: ""
+MacroBlockEnd: ""
 NamespaceIndentation: Inner
 PointerAlignment: Left
 ReferenceAlignment: Left
@@ -61,7 +59,5 @@ SpaceAfterLogicalNot: true
 SpaceBeforeCpp11BracedList: true
 SpaceBeforeJsonColon: true
 SpaceBeforeRangeBasedForLoopColon: false
-SpacesInAngles: false
-SpaceAroundPointerQualifiers: Left
+SpacesInAngles: Never
 TabWidth: 2
-...

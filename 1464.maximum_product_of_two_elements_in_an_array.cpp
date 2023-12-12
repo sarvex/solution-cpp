@@ -1,15 +1,17 @@
+#include <algorithm>
+#include <execution>
+#include <functional>
+#include <vector>
+
+using std::execution::par;
+using std::vector;
+using std::partial_sort;
+using std::greater;
+
 class Solution {
 public:
-    int maxProduct(vector<int>& nums) {
-        int a = 0, b = 0;
-        for (int v : nums) {
-            if (v > a) {
-                b = a;
-                a = v;
-            } else if (v > b) {
-                b = v;
-            }
-        }
-        return (a - 1) * (b - 1);
+    auto maxProduct(vector<int>& nums) {
+        partial_sort(par, nums.begin(), nums.begin() + 2, nums.end(), std::greater{});
+        return (nums[0] - 1) * (nums[1] - 1);
     }
 };
