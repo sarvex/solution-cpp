@@ -1,11 +1,11 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.27)
 project(solution)
 
 set(CMAKE_CXX_STANDARD 23)
 
 enable_testing()
 
-add_executable(solution main.cpp
+add_executable(solution
     0001.two_sum.cpp
     0002.add_two_numbers.cpp
     0003.longest_substring_without_repeating_characters.cpp
@@ -725,6 +725,7 @@ add_executable(solution main.cpp
     0821.shortest_distance_to_a_character.cpp
     0822.card_flipping_game.cpp
     0823.binary_trees_with_factors.cpp
+    0824.goat_latin.cpp
     0825.friends_of_appropriate_ages.cpp
     0826.most_profit_assigning_work.cpp
     0827.making_a_large_island.cpp
@@ -2475,6 +2476,9 @@ add_executable(solution main.cpp
     2938.separate_black_and_white_balls.cpp
     2939.maximum_xor_product.cpp
     2940.find_building_where_alice_and_bob_can_meet.cpp
-    2941.maximum_gcd_sum_of_a_subarray.cpp)
+    2941.maximum_gcd_sum_of_a_subarray.cpp
+    0824.goat_latin.cpp
+    2965.find_missing_and_repeated_values.cpp)
 
-add_executable(0058.length_of_last_word 0058.length_of_last_word.cpp)
+add_executable(0058.length_of_last_word 0058.length_of_last_word.cpp
+    0848.shifting_letters.cpp)

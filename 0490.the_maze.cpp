@@ -14,11 +14,11 @@ public:
             for (int k = 0; k < 4; ++k) {
                 int x = i, y = j;
                 int a = dirs[k], b = dirs[k + 1];
-                while (x + a >= 0 && x + a < m and y + b >= 0 && y + b < n && maze[x + a][y + b] == 0) {
+                while (x + a >= 0 and x + a < m and y + b >= 0 and y + b < n and maze[x + a][y + b] == 0) {
                     x += a;
                     y += b;
                 }
-                if (x == destination[0] && y == destination[1]) return 1;
+                if (x == destination[0] and y == destination[1]) return 1;
                 if (not vis[x][y]) {
                     vis[x][y] = true;
                     q.push({x, y});

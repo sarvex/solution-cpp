@@ -5,11 +5,11 @@ using std::string;
 using std::vector;
 
 class Solution {
-  auto next(string str) {
+  auto next(const string& str) {
     vector<int> n(str.length());
     n[0] = -1;
     int i = 0, pre = -1;
-    int len = str.length();
+    const int len = str.length();
     while (i < len) {
       while (pre >= 0 and str[i] != str[pre])
         pre = n[pre];

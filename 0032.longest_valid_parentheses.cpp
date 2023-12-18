@@ -1,6 +1,9 @@
+#include <algorithm>
+#include <execution>
 #include <string>
 
 using std::string;
+using std::execution::par;
 
 class Solution {
 public:
@@ -20,6 +23,6 @@ public:
         }
       }
     }
-    return *max_element(f, f + n + 1);
+    return *std::max_element(par, f, f + n + 1);
   }
 };

@@ -7,7 +7,7 @@ public:
   auto isValid(const string& s) {
     string stk;
 
-    const auto match = [] (auto& l, auto& r) {
+    const auto match = [] (const auto& l, const auto& r) {
       return (l == '(' and r == ')') or (l == '[' and r == ']') or (l == '{' and r == '}');
     };
 

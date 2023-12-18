@@ -10,7 +10,7 @@ public:
         }
         priority_queue<int> q2;
         while (k--) {
-            while (not q1.empty() && q1.top().first <= w) {
+            while (not q1.empty() and q1.top().first <= w) {
                 q2.push(q1.top().second);
                 q1.pop();
             }

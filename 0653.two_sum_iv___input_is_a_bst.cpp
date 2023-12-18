@@ -4,8 +4,7 @@ struct TreeNode {
   TreeNode *right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
   explicit TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right)
-      : val(x), left(left), right(right) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
 class Solution {
@@ -18,8 +17,8 @@ class Solution {
   auto find(const TreeNode *root, const TreeNode *node, const int &k) {
     if (!node) return false;
     int target = k - node->val;
-    if (target != node->val && exists(root, target)) return true;
-    return find(root, node->left, k) || find(root, node->right, k);
+    if (target != node->val and exists(root, target)) return true;
+    return find(root, node->left, k) or find(root, node->right, k);
   }
 
 public:

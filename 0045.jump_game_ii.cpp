@@ -7,14 +7,14 @@ using std::vector;
 class Solution {
 public:
   auto jump(vector<int> &nums) {
-    int ans = 0, mx = 0, last = 0;
+    int result = 0, jump = 0, last = 0;
     for (int i = 0; i < nums.size() - 1; ++i) {
-      mx = max(mx, i + nums[i]);
+      jump = max(jump, i + nums[i]);
       if (last == i) {
-        ++ans;
-        last = mx;
+        ++result;
+        last = jump;
       }
     }
-    return ans;
+    return result;
   }
 };

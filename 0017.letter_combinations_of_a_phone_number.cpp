@@ -11,13 +11,13 @@ public:
     vector<string> result = {""};
     if (digits.empty()) return result;
 
-    vector<string> map = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    const vector<string> map {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
-    for (auto i: digits) {
+    for (const auto& i: digits) {
       string s = map[i - '2'];
       vector<string> t;
-      for (auto& a: result) {
-        for (auto& b: s) {
+      for (const auto& a: result) {
+        for (const auto& b: s) {
           t.push_back(a + b);
         }
       }

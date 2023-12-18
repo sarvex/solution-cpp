@@ -20,14 +20,14 @@ class Solution {
 public:
   auto maxPathSum(TreeNode *root) {
     int result = std::numeric_limits<int>::min();
-    function<int(TreeNode *)> dfs = [&](TreeNode *root) {
-      if (not root) return 0;
-      const auto left = max(0, dfs(root->left));
-      const auto right = max(0, dfs(root->right));
-      result = max(result, left + right + root->val);
-      return root->val + max(left, right);
+    function<int(TreeNode *)> path = [&](TreeNode *node) {
+      if (not node) return 0;
+      const auto left = max(0, node->left ? path(node->left) : 0);
+      const auto right = max(0, node->right ? path(node->right) : 0);
+      result = max(result, left + right + node->val);
+      return node->val + max(left, right);
     };
-    dfs(root);
+    path(root);
     return result;
   }
 };

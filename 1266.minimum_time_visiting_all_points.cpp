@@ -1,12 +1,18 @@
+#include <algorithm>
+#include <vector>
+
+using std::max;
+using std::vector;
+
 class Solution {
 public:
-    int minTimeToVisitAllPoints(vector<vector<int>>& points) {
-        int ans = 0;
-        for (int i = 1; i < points.size(); ++i) {
-            int dx = abs(points[i][0] - points[i - 1][0]);
-            int dy = abs(points[i][1] - points[i - 1][1]);
-            ans += max(dx, dy);
-        }
-        return ans;
+  auto minTimeToVisitAllPoints(const vector<vector<int>>& points) {
+    int result = 0;
+    for (auto i = 1; i < points.size(); ++i) {
+      const auto dx = abs(points[i][0] - points[i - 1][0]);
+      const auto dy = abs(points[i][1] - points[i - 1][1]);
+      result += max(dx, dy);
     }
+    return result;
+  }
 };

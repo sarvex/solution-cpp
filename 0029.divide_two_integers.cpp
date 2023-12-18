@@ -8,7 +8,7 @@ using std::numeric_limits;
 
 class Solution {
 public:
-  auto divide(const int a, const int b) {
+  [[nodiscard]] auto divide(const int a, const int b) const {
     auto sign = 1;
     if (a < 0 xor b < 0) {
       sign = -1;

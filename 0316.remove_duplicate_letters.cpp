@@ -1,25 +1,25 @@
+#include <string>
+
+using std::string;
+
 class Solution {
 public:
-    string removeDuplicateLetters(string s) {
-        int n = s.size();
-        int last[26] = {0};
-        for (int i = 0; i < n; ++i) {
-            last[s[i] - 'a'] = i;
-        }
-        string ans;
-        int mask = 0;
-        for (int i = 0; i < n; ++i) {
-            char c = s[i];
-            if ((mask >> (c - 'a')) & 1) {
-                continue;
-            }
-            while (!ans.empty() and ans.back() > c and last[ans.back() - 'a'] > i) {
-                mask ^= 1 << (ans.back() - 'a');
-                ans.pop_back();
-            }
-            ans.push_back(c);
-            mask |= 1 << (c - 'a');
-        }
-        return ans;
+  string removeDuplicateLetters(string s) {
+    int n = s.size();
+    int last[26] = { 0 };
+    for (int i = 0; i < n; ++i) { last[s[i] - 'a'] = i; }
+    string ans;
+    int mask = 0;
+    for (int i = 0; i < n; ++i) {
+      char c = s[i];
+      if ((mask >> (c - 'a')) & 1) { continue; }
+      while (! ans.empty() and ans.back() > c and last[ans.back() - 'a'] > i) {
+        mask ^= 1 << (ans.back() - 'a');
+        ans.pop_back();
+      }
+      ans.push_back(c);
+      mask |= 1 << (c - 'a');
     }
+    return ans;
+  }
 };

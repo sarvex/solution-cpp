@@ -8,7 +8,7 @@ using std::vector;
 class Solution {
 public:
   auto nextPermutation(vector<int> &nums) {
-    int n = nums.size();
+    const int n = nums.size();
     int i = n - 2;
     while (~i and nums[i] >= nums[i + 1]) {
       --i;

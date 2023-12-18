@@ -1,20 +1,24 @@
+#include <string>
+
+using std::string;
+
 class Solution {
 public:
-    string robotWithString(string s) {
-        int cnt[26] = {0};
-        for (char& c : s) ++cnt[c - 'a'];
-        char mi = 'a';
-        string stk;
-        string ans;
-        for (char& c : s) {
-            --cnt[c - 'a'];
-            while (mi < 'z' and cnt[mi - 'a'] == 0) ++mi;
-            stk += c;
-            while (!stk.empty() and stk.back() <= mi) {
-                ans += stk.back();
-                stk.pop_back();
-            }
-        }
-        return ans;
+  string robotWithString(const string& s) {
+    int count[26] = { 0 };
+    for (auto& c: s) ++count[c - 'a'];
+    char index = 'a';
+    string robot;
+    string result;
+    for (auto& c: s) {
+      --count[c - 'a'];
+      while (index < 'z' and count[index - 'a'] == 0) ++index;
+      robot += c;
+      while (not robot.empty() and robot.back() <= index) {
+        result += robot.back();
+        robot.pop_back();
+      }
     }
+    return result;
+  }
 };

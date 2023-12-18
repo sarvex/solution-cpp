@@ -1,22 +1,28 @@
+#include <vector>
+
+using std::vector;
+
 class Solution {
 public:
-    int numSpecial(vector<vector<int>>& mat) {
-        int m = mat.size(), n = mat[0].size();
-        vector<int> r(m), c(n);
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                r[i] += mat[i][j];
-                c[j] += mat[i][j];
-            }
+  auto numSpecial(const vector<vector<int>> &mat) {
+    auto m = mat.size(), n = mat[0].size();
+    vector<int> row(m), col(n);
+    for (auto i = 0; i < m; ++i) {
+      for (auto j = 0; j < n; ++j) {
+        if (mat[i][j] == 1) {
+          ++row[i];
+          ++col[j];
         }
-        int ans = 0;
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (mat[i][j] == 1 and r[i] == 1 and c[j] == 1) {
-                    ++ans;
-                }
-            }
-        }
-        return ans;
+      }
     }
+    int result = 0;
+    for (auto i = 0; i < m; ++i) {
+      for (auto j = 0; j < n; ++j) {
+        if (mat[i][j] == 1 and row[i] == 1 and col[j] == 1) {
+          ++result;
+        }
+      }
+    }
+    return result;
+  }
 };

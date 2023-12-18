@@ -1,38 +1,37 @@
+#include <vector>
+#include<unordered_set>
+
+using std::unordered_set;
+using std::vector;
+
 class Solution {
 public:
-    bool isPossible(int n, vector<vector<int>>& edges) {
-        vector<unordered_set<int>> g(n + 1);
-        for (auto& e : edges) {
-            int a = e[0], b = e[1];
-            g[a].insert(b);
-            g[b].insert(a);
-        }
-        vector<int> vs;
-        for (int i = 1; i <= n; ++i) {
-            if (g[i].size() % 2) {
-                vs.emplace_back(i);
-            }
-        }
-        if (vs.size() == 0) {
-            return true;
-        }
-        if (vs.size() == 2) {
-            int a = vs[0], b = vs[1];
-            if (!g[a].count(b)) return true;
-            for (int c = 1; c <= n; ++c) {
-                if (a != b and b != c and !g[a].count(c) and !g[c].count(b)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        if (vs.size() == 4) {
-            int a = vs[0], b = vs[1], c = vs[2], d = vs[3];
-            if (!g[a].count(b) and !g[c].count(d)) return true;
-            if (!g[a].count(c) and !g[b].count(d)) return true;
-            if (!g[a].count(d) and !g[b].count(c)) return true;
-            return false;
-        }
-        return false;
+  auto isPossible(const int n, const vector<vector<int>>& edges) {
+    vector<unordered_set<int>> graph(n + 1);
+    for (auto& edge: edges) {
+      int a = edge[0], b = edge[1];
+      graph[a].insert(b);
+      graph[b].insert(a);
     }
+
+    vector<int> result;
+    for (int i = 1; i <= n; ++i) { if (graph[i].size() % 2) { result.emplace_back(i); } }
+    if (result.empty()) { return true; }
+    if (result.size() == 2) {
+      const int a = result[0], b = result[1];
+      if (! graph[a].contains(b)) return true;
+      for (int c = 1; c <= n; ++c) {
+        if (a != b and b != c and not graph[a].contains(c) and not graph[c].contains(b)) { return true; }
+      }
+      return false;
+    }
+    if (result.size() == 4) {
+      const int a = result[0], b = result[1], c = result[2], d = result[3];
+      if (not graph[a].contains(b) and not graph[c].contains(d)) return true;
+      if (not graph[a].contains(c) and not graph[b].contains(d)) return true;
+      if (not graph[a].contains(d) and not graph[b].contains(c)) return true;
+      return false;
+    }
+    return false;
+  }
 };

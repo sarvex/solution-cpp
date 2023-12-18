@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <vector>
 
-using std::sort;
+using std::ranges::sort;
 using std::unordered_map;
 using std::vector;
 
@@ -14,7 +14,7 @@ public:
     if (n < 3)
       return result;
 
-    sort(nums.begin(), nums.end());
+    sort(nums);
     for (int i = 0; i < n - 2 and nums[i] <= 0; ++i) {
       if (i and nums[i] == nums[i - 1])
         continue;
@@ -58,7 +58,7 @@ public:
       for (int j = i + 1; j < n - 1; ++j) {
         int target = -1 * (nums[i] + nums[j]);
         if (auto search = map.find(target);
-            search != map.end() && search->second > j) {
+            search != map.end() and search->second > j) {
           result.push_back({nums[i], nums[j], target});
         }
         j = map.find(nums[j])->second;

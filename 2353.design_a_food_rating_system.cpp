@@ -1,30 +1,40 @@
-using pis = pair<int, string>;
+#include <set>
+#include <string>
+#include <unordered_map>
+#include <utility>
+#include <vector>
+
+using std::unordered_map;
+using std::pair;
+using std::set;
+using std::string;
+using std::vector;
 
 class FoodRatings {
-    map<string, pis> mp;
-    map<string, set<pis>> t;
+  static constexpr auto comp = [](const pair<string, int>& a, const pair<string, int>& b) {
+    return a.second == b.second ? a.first < b.first : a.second > b.second;
+  };
 
 public:
-    FoodRatings(vector<string>& foods, vector<string>& cuisines, vector<int>& ratings) {
-        int n = foods.size();
-        for (int i = 0; i < n; ++i) {
-            string a = foods[i], b = cuisines[i];
-            int c = ratings[i];
-            mp[a] = pis(c, b);
-            t[b].insert(pis(-c, a));
-        }
-    }
+  unordered_map<string, pair<string, int>> menu;
+  unordered_map<string, set<pair<string, int>, decltype(comp)>> rating;
 
-    void changeRating(string food, int newRating) {
-        pis& p = mp[food];
-        t[p.second].erase(pis(-p.first, food));
-        p.first = newRating;
-        t[p.second].insert(pis(-p.first, food));
+  FoodRatings(const vector<string>& foods, const vector<string>& cuisines, const vector<int>& ratings) {
+    for (int i = 0; i < foods.size(); ++i) {
+      menu[foods[i]] = { cuisines[i], ratings[i] };
+      rating[cuisines[i]].insert({ foods[i], ratings[i] });
     }
+  }
 
-    string highestRated(string cuisine) {
-        return t[cuisine].begin()->second;
-    }
+  void changeRating(const string& food, const int newRating) {
+    auto& [fst, snd] = menu[food];
+    auto& r = rating[fst];
+    r.erase({ food, snd });
+    snd = newRating;
+    r.insert({ food, snd });
+  }
+
+  string highestRated(const string& cuisine) { return rating[cuisine].begin()->first; }
 };
 
 /**

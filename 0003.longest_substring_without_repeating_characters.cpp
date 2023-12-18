@@ -7,7 +7,7 @@ using std::vector;
 
 class Solution {
 public:
-  auto lengthOfLongestSubstring(const string& s) {
+  auto lengthOfLongestSubstring(const string& ss) {
     int start = 0;
     int result = 0;
 
