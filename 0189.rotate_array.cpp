@@ -1,10 +1,9 @@
+#include <algorithm>
+#include <vector>
+
 class Solution {
 public:
-    void rotate(vector<int>& nums, int k) {
-        int n = nums.size();
-        k %= n;
-        reverse(nums.begin(), nums.end());
-        reverse(nums.begin(), nums.begin() + k);
-        reverse(nums.begin() + k, nums.end());
-    }
+  void rotate(std::vector<int>& nums, const int k) {
+    std::rotate(nums.rbegin(), nums.rbegin() + (k % nums.size()), nums.rend());
+  }
 };

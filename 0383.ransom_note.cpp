@@ -1,15 +1,11 @@
+#include <vector>
+
 class Solution {
 public:
-    bool canConstruct(string ransomNote, string magazine) {
-        int cnt[26]{};
-        for (char& c : magazine) {
-            ++cnt[c - 'a'];
-        }
-        for (char& c : ransomNote) {
-            if (--cnt[c - 'a'] < 0) {
-                return false;
-            }
-        }
-        return true;
-    }
+  bool canConstruct(const std::string& ransomNote, const std::string& magazine) {
+    std::vector count(26, 0);
+    for (const char& c: magazine) { ++count[c - 'a']; }
+    for (const char& c: ransomNote) { if (--count[c - 'a'] < 0) { return false; } }
+    return true;
+  }
 };

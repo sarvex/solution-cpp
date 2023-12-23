@@ -2,27 +2,21 @@
 #include <string>
 #include <vector>
 
-using std::distance;
-using std::ranges::find;
-using std::ranges::max_element;
-using std::min;
-using std::string;
-using std::vector;
-
 class Solution {
 public:
-  auto longestPalindromeFast(const string& s) {
-    string str {"^#"};
-    for (const char c: s)
+  auto longestPalindromeFast(const std::string &s) {
+    std::string str{"^#"};
+    for (const char c : s)
       str.append({c, '#'});
     str.append("$");
 
     const auto n = str.size();
-    vector palindrome(n, 0);
+    std::vector palindrome(n, 0);
     int center = 0, radius = 0;
 
     for (int i = 1; i < n - 1; ++i) {
-      palindrome[i] = (radius > i) ? min(radius - i, palindrome[2 * center - i]) : 0;
+      palindrome[i] =
+          (radius > i) ? std::min(radius - i, palindrome[2 * center - i]) : 0;
       while (str[i + 1 + palindrome[i]] == str[i - 1 - palindrome[i]])
         palindrome[i]++;
 
@@ -32,15 +26,16 @@ public:
       }
     }
 
-    const auto max_length = *max_element(palindrome);
-    const auto center_index = distance(palindrome.begin(), find(palindrome, max_length));
+    const auto max_length = *std::max_element(palindrome);
+    const auto center_index =
+        distance(palindrome.begin(), find(palindrome, max_length));
     return s.substr((center_index - max_length) / 2, max_length);
   }
 
-  auto longestPalindrome(const string& s) {
+  auto longestPalindrome(const std::string &s) {
     const int n = s.size();
 
-    vector f(n, vector(n, true));
+    std::vector f(n, vector(n, true));
     int k = 0, mx = 1;
     for (int i = n - 2; ~i; --i) {
       for (int j = i + 1; j < n; ++j) {

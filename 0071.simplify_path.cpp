@@ -2,35 +2,20 @@
 #include <sstream>
 #include <string>
 
-using std::deque;
-using std::string;
-using std::stringstream;
-
 class Solution {
 public:
-  auto simplifyPath(const string& path) {
-    deque<string> stk;
-    stringstream ss(path);
-    string t;
-    while (getline(ss, t, '/')) {
-      if (t == "" or t == ".") {
-        continue;
-      }
-      if (t == "..") {
-        if (not stk.empty()) {
-          stk.pop_back();
-        }
-      } else {
-        stk.push_back(t);
-      }
+  auto simplifyPath(const std::string& path) -> std::string {
+    std::deque<std::string> stk;
+
+    std::istringstream stream(path);
+    for (std::string token; getline(stream, token, '/');) {
+      if (token.empty() or token == ".") continue;
+      if (token == "..") { if (not stk.empty()) stk.pop_back(); } else { stk.push_back(token); }
     }
-    if (stk.empty()) {
-      return "/";
-    }
-    string ans;
-    for (auto &s : stk) {
-      ans += "/" + s;
-    }
-    return ans;
+
+    if (stk.empty()) return "/";
+    std::ostringstream result;
+    for (auto& s: stk) result << "/" + s;
+    return result.str();
   }
 };

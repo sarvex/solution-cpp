@@ -2,16 +2,13 @@
 #include <string>
 #include <vector>
 
-using std::string;
-using std::vector;
-
 class Solution {
 public:
-  auto lengthOfLongestSubstring(const string& ss) {
+  auto lengthOfLongestSubstring(const std::string &s) {
     int start = 0;
     int result = 0;
 
-    vector<int> pos(128, -1);
+    std::vector<int> pos(128, -1);
 
     for (int i = 0; i < s.size(); i++) {
       if (pos[s[i]] == -1 or pos[s[i]] < start) {

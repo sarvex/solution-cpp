@@ -9,8 +9,6 @@ struct ListNode {
 class Solution {
 public:
   auto addTwoNumbers(const ListNode* l1, const ListNode* l2) {
-    const int decimal = 10;
-
     ListNode result{0};
     auto node = &result;
 
@@ -19,9 +17,9 @@ public:
     while (l1 or l2 or carry) {
 
       const auto sum = (l1 ? l1->val : 0) + (l2 ? l2->val : 0) + carry;
-      carry = sum / decimal;
+      carry = sum / 10;
 
-      node->next = new ListNode(sum % decimal);
+      node->next = new ListNode(sum % 10);
       node = node->next;
 
       l1 = l1 ? l1->next : nullptr;

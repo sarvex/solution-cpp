@@ -9,9 +9,7 @@ struct ListNode {
 class Solution {
 public:
   auto mergeTwoLists(ListNode* list1, ListNode* list2) {
-
     ListNode dummy{0};
-
     ListNode *node = &dummy;
 
     while (list1 and list2) {

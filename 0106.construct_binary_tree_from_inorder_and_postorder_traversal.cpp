@@ -2,10 +2,6 @@
 #include <unordered_map>
 #include <vector>
 
-using std::function;
-using std::unordered_map;
-using std::vector;
-
 struct TreeNode {
   int val;
   TreeNode *left;
@@ -18,24 +14,18 @@ struct TreeNode {
 
 class Solution {
 public:
-  unordered_map<int, int> indexes;
+  auto buildTree(const std::vector<int>& inorder, const std::vector<int>& postorder) {
+    const int n = inorder.size();
+    std::unordered_map<int, int> indexes;
+    for (int i = 0; i < n; ++i) indexes[inorder[i]] = i;
 
-  auto buildTree(const vector<int> &inorder, const vector<int> &postorder) {
-    for (int i = 0; i < inorder.size(); ++i)
-      indexes[inorder[i]] = i;
-
-    function<TreeNode *(const int, const int, const int)> traverse =
-        [&](const int i, const int j, const int n) -> TreeNode * {
-      if (n <= 0)
-        return nullptr;
-      int v = postorder[j + n - 1];
-      int k = indexes[v];
-      TreeNode *root = new TreeNode(v);
-      root->left = traverse(i, j, k - i);
-      root->right = traverse(k + 1, j + k - i, n - k + i - 1);
-      return root;
+    std::function<TreeNode* (int, int, int)> traverse = [&](const int i, const int j, const int l) -> TreeNode * {
+      if (l <= 0) return nullptr;
+      const int value = postorder[j + l - 1];
+      const int k = indexes[value];
+      return new TreeNode(value, traverse(i, j, k - i), traverse(k + 1, j + k - i, l - k + i - 1));
     };
 
-    return traverse(0, 0, inorder.size());
+    return traverse(0, 0, n);
   }
 };

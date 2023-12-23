@@ -2,45 +2,34 @@
 #include <unordered_map>
 #include <vector>
 
-using std::string;
-using std::unordered_map;
-using std::vector;
-
 class Solution {
 public:
-  auto findSubstring(const string& s, const vector<string>& words) {
-    unordered_map<string, int> cnt;
-    for (auto& w: words) {
-      ++cnt[w];
-    }
-    const auto m = s.size();
-    const auto n = words.size();
-    const auto k = words[0].size();
-    vector<int> ans;
-    for (auto i = 0; i < k; ++i) {
-      unordered_map<string, int> cnt1;
-      int l = i, r = i;
-      auto t = 0;
-      while (r + k <= m) {
-        string w = s.substr(r, k);
-        r += k;
-        if (not cnt.contains(w)) {
-          cnt1.clear();
-          l = r;
-          t = 0;
+  auto findSubstring(const std::string& s, const std::vector<std::string>& words) {
+    std::unordered_map<std::string, int> count;
+    for (auto& word: words) { ++count[word]; }
+    const auto k = s.size(), m = words.size(), n = words[0].size();
+    std::vector<int> result;
+    for (auto i = 0; i < n; ++i) {
+      std::unordered_map<std::string, int> cnt;
+      auto left = i, right = i, mid = 0;
+      while (right + n <= k) {
+        std::string word = s.substr(right, n);
+        right += n;
+        if (not count.contains(word)) {
+          cnt.clear();
+          left = right;
+          mid = 0;
           continue;
         }
-        ++cnt1[w];
-        ++t;
-        while (cnt1[w] > cnt[w]) {
-          string remove = s.substr(l, k);
-          l += k;
-          --cnt1[remove];
-          --t;
+        ++cnt[word];
+        ++mid;
+        while (cnt[word] > count[word]) {
+          std::string remove = s.substr(left, n);
+          left += n;
+          --cnt[remove];
+          --mid;
         }
-        if (t == n) {
-          ans.push_back(l);
-        }
+        if (mid == m) { result.push_back(left); }
       }
     }
     return result;

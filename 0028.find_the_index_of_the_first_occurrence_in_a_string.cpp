@@ -25,6 +25,10 @@ class Solution {
   }
 
 public:
+  int strStrFast(string haystack, string needle) {
+    return haystack.find(needle);
+  }
+
   auto strStr(const string& haystack, const string& needle) {
     if (needle.empty())
       return 0;

@@ -1,19 +1,22 @@
+#include <vector>
+
 class Solution {
 public:
-    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
-        int n = gas.size();
-        int i = n - 1, j = n - 1;
-        int cnt = 0, s = 0;
-        while (cnt < n) {
-            s += gas[j] - cost[j];
-            ++cnt;
-            j = (j + 1) % n;
-            while (s < 0 and cnt < n) {
-                --i;
-                s += gas[i] - cost[i];
-                ++cnt;
-            }
-        }
-        return s < 0 ? -1 : i;
+  int canCompleteCircuit(const std::vector<int>& gas, const std::vector<int>& cost) {
+
+    int current = 0, total = 0, diff = 0, start = 0
+
+    for (int i = 0; i < gas.size(); i++) {
+      diff = gas[i] - cost[i];
+
+      total += diff;
+      current += diff;
+      if (current < 0) {
+        start = i + 1;
+        current = 0;
+      }
     }
+
+    return total >= 0 ? start : -1;
+  }
 };

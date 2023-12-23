@@ -7,17 +7,22 @@ using std::vector;
 class Solution {
 public:
   auto intToRoman(int num) {
-    const vector<string> roman = {"M",  "CM", "D",  "CD", "C",  "XC", "L", "XL", "X",  "IX", "V",  "IV", "I"};
-    const vector integer = {1000, 900, 500, 400, 100, 90, 50, 40,   10,  9,   5,   4,   1};
+    static const vector<pair<int, string>> symbol{
+      { 1000, "M" }, { 900, "CM" }, { 500, "D" }, { 400, "CD" }, { 100, "C" },
+      { 90, "XC" }, { 50, "L" }, { 40, "XL" }, { 10, "X" }, { 9, "IX" },
+      { 5, "V" }, { 4, "IV" }, { 1, "I" } };
 
     string result;
 
-    for (int i = 0; i < roman.size(); ++i) {
-      while (num >= integer[i]) {
-        num -= integer[i];
-        result += roman[i];
+    for (const auto& [value, symbol]: symbol) {
+      if (num == 0)
+        break;
+      while (num >= value) {
+        num -= value;
+        result += symbol;
       }
     }
+
     return result;
   }
 };
