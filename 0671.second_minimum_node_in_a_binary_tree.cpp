@@ -11,17 +11,17 @@
  */
 class Solution {
 public:
-    int ans = -1;
+    int result = -1;
 
     int findSecondMinimumValue(TreeNode* root) {
         dfs(root, root->val);
-        return ans;
+        return result;
     }
 
     void dfs(TreeNode* root, int val) {
         if (!root) return;
         dfs(root->left, val);
         dfs(root->right, val);
-        if (root->val > val) ans = ans == -1 ? root->val : min(ans, root->val);
+        if (root->val > val) result = result == -1 ? root->val : min(result, root->val);
     }
 };

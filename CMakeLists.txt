@@ -2478,7 +2478,10 @@ add_executable(solution
     2940.find_building_where_alice_and_bob_can_meet.cpp
     2941.maximum_gcd_sum_of_a_subarray.cpp
     0824.goat_latin.cpp
-    2965.find_missing_and_repeated_values.cpp)
+    2965.find_missing_and_repeated_values.cpp
+    0026.reverse_nodes_in_k_group.cpp
+    1531.string_compression_ii.cpp)
 
 add_executable(0058.length_of_last_word 0058.length_of_last_word.cpp
-    0848.shifting_letters.cpp)
+    0848.shifting_letters.cpp
+    1531.string_compression_ii.cpp)

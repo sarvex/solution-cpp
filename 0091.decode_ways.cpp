@@ -5,17 +5,15 @@ using std::string;
 class Solution {
 public:
   auto numDecodings(string s) {
-    int n = s.size();
-    int f = 0, g = 1;
-    for (int i = 1; i <= n; ++i) {
-      int h = s[i - 1] != '0' ? g : 0;
-      if (i > 1 and
-          (s[i - 2] == '1' or (s[i - 2] == '2' and s[i - 1] <= '6'))) {
-        h += f;
-      }
-      f = g;
-      g = h;
+    const int n = s.size();
+    int frequency = 0, result = 1;
+    for (int i = 0; i < n; ++i) {
+      int index = s[i] != '0' ? result : 0;
+      if (i and (s[i - 1] == '1' or (s[i - 1] == '2' and s[i] < '7')))
+        index += frequency;
+      frequency = result;
+      result = index;
     }
-    return g;
+    return result;
   }
 };

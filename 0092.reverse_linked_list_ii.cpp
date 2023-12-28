@@ -13,20 +13,21 @@ public:
       return head;
     }
     ListNode dummy{0, head};
-    ListNode *pre = &dummy;
+    auto pre = &dummy;
     for (int i = 0; i < left - 1; ++i) {
       pre = pre->next;
     }
-    ListNode *p = pre, *q = pre->next;
-    ListNode *node = q;
+
+    const auto start = pre, end = pre->next;
+    auto node = end;
     for (int i = 0; i < right - left + 1; ++i) {
-      ListNode *t = node->next;
+      const auto temp = node->next;
       node->next = pre;
       pre = node;
-      node = t;
+      node = temp;
     }
-    p->next = pre;
-    q->next = node;
+    start->next = pre;
+    end->next = node;
     return dummy.next;
   }
 };

@@ -1,18 +1,21 @@
+#include <algorithm>
+#include <cstdint>
+#include <limits>
+#include <vector>
+
 class Solution {
 public:
-    int findMinArrowShots(vector<vector<int>>& points) {
-        sort(points.begin(), points.end(), [](vector<int>& a, vector<int>& b) {
-            return a[1] < b[1];
-        });
-        int ans = 0;
-        long long last = -(1LL << 60);
-        for (auto& p : points) {
-            int a = p[0], b = p[1];
-            if (a > last) {
-                ++ans;
-                last = b;
-            }
-        }
-        return ans;
+  int findMinArrowShots(std::vector<std::vector<int>>& points) {
+    sort( points.begin(), points.end(),
+        [](const std::vector<int>& a, const std::vector<int>& b) { return a[1] < b[1]; });
+    int result = 0;
+    int64_t last = std::numeric_limits<int64_t>::min();
+    for (auto& p: points) {
+      if (p[0] > last) {
+        ++result;
+        last = p[1];
+      }
     }
+    return result;
+  }
 };

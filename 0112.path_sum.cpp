@@ -1,23 +1,23 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+#include <functional>
+
+struct TreeNode {
+  int val;
+  TreeNode* left;
+  TreeNode* right;
+  TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
+};
+
 class Solution {
 public:
-    bool hasPathSum(TreeNode* root, int targetSum) {
-        function<bool(TreeNode*, int)> dfs = [&](TreeNode* root, int s) -> int {
-            if (not root) return false;
-            s += root->val;
-            if (not root->left and not root->right and s == targetSum) return true;
-            return dfs(root->left, s) or dfs(root->right, s);
-        };
-        return dfs(root, 0);
-    }
+  bool hasPathSum(TreeNode* root, int targetSum) {
+    std::function<bool(TreeNode*, int)> sum = [&](const TreeNode* node, int target) {
+      if (not node) return false;
+      target += node->val;
+      if (not node->left and not node->right and target == targetSum) return true;
+      return (node->left ? sum(node->left, target) : false) or (node->right ? sum(node->right, target) : false);
+    };
+    return sum(root, 0);
+  }
 };

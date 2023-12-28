@@ -11,12 +11,12 @@
  */
 class Solution {
 public:
-    int ans;
+    int result;
 
     int longestConsecutive(TreeNode* root) {
-        ans = 0;
+        result = 0;
         dfs(root);
-        return ans;
+        return result;
     }
 
     vector<int> dfs(TreeNode* root) {
@@ -32,7 +32,7 @@ public:
             if (root->right->val + 1 == root->val) incr = max(incr, right[0] + 1);
             if (root->right->val - 1 == root->val) decr = max(decr, right[1] + 1);
         }
-        ans = max(ans, incr + decr - 1);
+        result = max(result, incr + decr - 1);
         return {incr, decr};
     }
 };

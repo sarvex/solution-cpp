@@ -35,7 +35,7 @@ public:
   auto longestPalindrome(const std::string &s) {
     const int n = s.size();
 
-    std::vector f(n, vector(n, true));
+    std::vector f(n, std::vector(n, true));
     int k = 0, mx = 1;
     for (int i = n - 2; ~i; --i) {
       for (int j = i + 1; j < n; ++j) {

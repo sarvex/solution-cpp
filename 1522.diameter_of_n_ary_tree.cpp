@@ -20,12 +20,12 @@ public:
 
 class Solution {
 public:
-    int ans;
+    int result;
 
     int diameter(Node* root) {
-        ans = 0;
+        result = 0;
         dfs(root);
-        return ans;
+        return result;
     }
 
     int dfs(Node* root) {
@@ -39,7 +39,7 @@ public:
             } else if (t > m2)
                 m2 = t;
         }
-        ans = max(ans, m1 + m2);
+        result = max(result, m1 + m2);
         return 1 + m1;
     }
 };

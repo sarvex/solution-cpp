@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int ans;
+    int result;
 
     int reachableNodes(int n, vector<vector<int>>& edges, vector<int>& restricted) {
         vector<vector<int>> g(n);
@@ -11,15 +11,15 @@ public:
         }
         vector<bool> vis(n);
         for (int v : restricted) vis[v] = true;
-        ans = 0;
+        result = 0;
         dfs(0, g, vis);
-        return ans;
+        return result;
     }
 
     void dfs(int u, vector<vector<int>>& g, vector<bool>& vis) {
         if (vis[u]) return;
         vis[u] = true;
-        ++ans;
+        ++result;
         for (int v : g[u]) dfs(v, g, vis);
     }
 };

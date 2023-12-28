@@ -1,14 +1,14 @@
 class Solution {
 public:
-    int ans;
+    int result;
     unordered_map<int, int> mp;
 
     int pathSum(vector<int>& nums) {
-        ans = 0;
+        result = 0;
         mp.clear();
         for (int num : nums) mp[num / 10] = num % 10;
         dfs(11, 0);
-        return ans;
+        return result;
     }
 
     void dfs(int node, int t) {
@@ -18,7 +18,7 @@ public:
         int l = (d + 1) * 10 + (p * 2) - 1;
         int r = l + 1;
         if (not mp.count(l) and not mp.count(r)) {
-            ans += t;
+            result += t;
             return;
         }
         dfs(l, t);

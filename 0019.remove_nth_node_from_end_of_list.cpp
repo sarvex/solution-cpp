@@ -9,25 +9,22 @@ struct ListNode {
 class Solution {
 public:
   auto removeNthFromEnd(ListNode *head, int n) {
-    auto fast = head;
-    auto slow = head;
-
+    ListNode dummy{0, head};
+    auto fast = &dummy;
     while (n--) {
       fast = fast->next;
     }
 
+    auto slow = &dummy;
     while (fast->next) {
       slow = slow->next;
       fast = fast->next;
     }
 
     const auto temp = slow->next;
-    if (temp and temp->next)
-      slow->next = temp->next;
-    else
-      slow->next = nullptr;
-
+    slow->next = temp->next;
     delete temp;
-    return head;
+
+    return dummy.next;
   }
 };

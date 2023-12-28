@@ -1,36 +1,27 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+#include <stack>
+
+struct TreeNode {
+  int val;
+  TreeNode* left;
+  TreeNode* right;
+  TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  explicit TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
+};
+
 class BSTIterator {
 public:
-    stack<TreeNode*> stack;
-    BSTIterator(TreeNode* root) {
-        for (; root != nullptr; root = root->left) {
-            stack.push(root);
-        }
-    }
+  std::stack<TreeNode*> stack;
+  explicit BSTIterator(TreeNode* root) { for (; root != nullptr; root = root->left) { stack.push(root); } }
 
-    int next() {
-        TreeNode* cur = stack.top();
-        stack.pop();
-        TreeNode* node = cur->right;
-        for (; node != nullptr; node = node->left) {
-            stack.push(node);
-        }
-        return cur->val;
-    }
+  int next() {
+    const auto cur = stack.top();
+    stack.pop();
+    for (auto node = cur->right; node != nullptr; node = node->left) { stack.push(node); }
+    return cur->val;
+  }
 
-    bool hasNext() {
-        return !stack.empty();
-    }
+  [[nodiscard]] bool hasNext() const { return ! stack.empty(); }
 };
 
 /**

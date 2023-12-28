@@ -4,15 +4,15 @@ public:
         memset(filled, 0, sizeof(filled));
         this->n = n;
         this->m = m;
-        ans = n * m;
+        result = n * m;
         dfs(0, 0, 0);
-        return ans;
+        return result;
     }
 
 private:
     int filled[13];
     int n, m;
-    int ans;
+    int result;
 
     void dfs(int i, int j, int t) {
         if (j == m) {
@@ -20,12 +20,12 @@ private:
             j = 0;
         }
         if (i == n) {
-            ans = t;
+            result = t;
             return;
         }
         if (filled[i] >> j & 1) {
             dfs(i, j + 1, t);
-        } else if (t + 1 < ans) {
+        } else if (t + 1 < result) {
             int r = 0, c = 0;
             for (int k = i; k < n; ++k) {
                 if (filled[k] >> j & 1) {

@@ -1,86 +1,77 @@
-struct Node {
-    int k;
-    int v;
-    Node* prev;
-    Node* next;
+#include <unordered_map>
 
-    Node()
-        : k(0)
-        , v(0)
-        , prev(nullptr)
-        , next(nullptr) {}
-    Node(int key, int val)
-        : k(key)
-        , v(val)
-        , prev(nullptr)
-        , next(nullptr) {}
+struct Node {
+  int k;
+  int v;
+  Node* prev;
+  Node* next;
+  Node() : k(0) , v(0) , prev(nullptr) , next(nullptr) {}
+  Node(int key, int val) : k(key) , v(val) , prev(nullptr) , next(nullptr) {}
 };
 
 class LRUCache {
 public:
-    LRUCache(int capacity)
-        : cap(capacity)
-        , size(0) {
-        head = new Node();
-        tail = new Node();
-        head->next = tail;
-        tail->prev = head;
-    }
+  explicit LRUCache(const int capacity) : capacity_(capacity) , size_(0) {
+    head_ = new Node();
+    tail_ = new Node();
+    head_->next = tail_;
+    tail_->prev = head_;
+  }
 
-    int get(int key) {
-        if (not cache.count(key)) return -1;
-        Node* node = cache[key];
-        moveToHead(node);
-        return node->v;
-    }
+  int get(int key) {
+    if (not cache_.count(key)) return -1;
+    Node* node = cache_[key];
+    moveToHead(node);
+    return node->v;
+  }
 
-    void put(int key, int value) {
-        if (cache.count(key)) {
-            Node* node = cache[key];
-            node->v = value;
-            moveToHead(node);
-        } else {
-            Node* node = new Node(key, value);
-            cache[key] = node;
-            addToHead(node);
-            ++size;
-            if (size > cap) {
-                node = removeTail();
-                cache.erase(node->k);
-                --size;
-            }
-        }
+  void put(int key, int value) {
+    if (cache_.count(key)) {
+      Node* node = cache_[key];
+      node->v = value;
+      moveToHead(node);
+    } else {
+      Node* node = new Node(key, value);
+      cache_[key] = node;
+      addToHead(node);
+      ++size_;
+      if (size_ > capacity_) {
+        node = removeTail();
+        cache_.erase(node->k);
+        --size_;
+      }
     }
+  }
 
 private:
-    unordered_map<int, Node*> cache;
-    Node* head;
-    Node* tail;
-    int cap;
-    int size;
+  std::unordered_map<int, Node*> cache_;
+  Node* head_;
+  Node* tail_;
+  int capacity_;
+  int size_;
 
-    void moveToHead(Node* node) {
-        removeNode(node);
-        addToHead(node);
-    }
+  void moveToHead(Node* node) {
+    removeNode(node);
+    addToHead(node);
+  }
 
-    void removeNode(Node* node) {
-        node->prev->next = node->next;
-        node->next->prev = node->prev;
-    }
+  void removeNode(Node* node) {
+    node->prev->next = node->next;
+    node->next->prev = node->prev;
+  }
 
-    void addToHead(Node* node) {
-        node->next = head->next;
-        node->prev = head;
-        head->next = node;
-        node->next->prev = node;
-    }
+  void addToHead(Node* node) {
+    node->next = head_->next;
+    node->prev = head_;
+    head_->next = node;
+    node->next->prev = node;
+  }
 
-    Node* removeTail() {
-        Node* node = tail->prev;
-        removeNode(node);
-        return node;
-    }
+  Node* removeTail() {
+    Node* node = tail_->prev;
+    removeNode(node);
+    return node;
+  }
 };
 
 /**

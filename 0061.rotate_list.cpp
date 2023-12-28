@@ -9,21 +9,18 @@ struct ListNode {
 class Solution {
 public:
   auto rotateRight(ListNode* head, int k) {
-    if (not head or not head->next) {
-      return head;
+    if (not head or not head->next) return head;
+    int count = 0;
+
+    for (auto node = head; node; ++count) {
+      node = node->next;
     }
-    ListNode *cur = head;
-    int n = 0;
-    while (cur) {
-      ++n;
-      cur = cur->next;
-    }
-    k %= n;
-    if (k == 0) {
-      return head;
-    }
-    ListNode *fast = head;
-    ListNode *slow = head;
+
+    k %= count;
+    if (k == 0) return head;
+
+    auto fast = head;
+    auto slow = head;
     while (k--) {
       fast = fast->next;
     }
@@ -31,9 +28,10 @@ public:
       fast = fast->next;
       slow = slow->next;
     }
-    ListNode *ans = slow->next;
+
+    const auto result = slow->next;
     slow->next = nullptr;
     fast->next = head;
-    return ans;
+    return result;
   }
 };

@@ -1,11 +1,9 @@
 #include <vector>
 
-using std::vector;
-
 class Solution {
 public:
-  auto plusOne(vector<int> &digits) {
-    for (int i = digits.size() - 1; i >= 0; --i) {
+  auto plusOne(std::vector<int> &digits) {
+    for (int i = digits.size() - 1; ~i; --i) {
       ++digits[i];
       digits[i] %= 10;
       if (digits[i] != 0)

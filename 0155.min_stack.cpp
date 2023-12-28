@@ -1,30 +1,26 @@
+#include <limits>
+#include <stack>
+
 class MinStack {
+  std::stack<int> stk_;
+  std::stack<int> min_;
+
 public:
-    MinStack() {
-        stk2.push(INT_MAX);
-    }
+  MinStack() { min_.push(std::numeric_limits<int>::max()); }
 
-    void push(int val) {
-        stk1.push(val);
-        stk2.push(min(val, stk2.top()));
-    }
+  void push(const int val) {
+    stk_.push(val);
+    min_.push(std::min(val, min_.top()));
+  }
 
-    void pop() {
-        stk1.pop();
-        stk2.pop();
-    }
+  void pop() {
+    stk_.pop();
+    min_.pop();
+  }
 
-    int top() {
-        return stk1.top();
-    }
+  int top() { return stk_.top(); }
 
-    int getMin() {
-        return stk2.top();
-    }
-
-private:
-    stack<int> stk1;
-    stack<int> stk2;
+  int getMin() { return min_.top(); }
 };
 
 /**

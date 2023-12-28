@@ -12,19 +12,19 @@
 class Solution {
 public:
     const int inf = INT_MAX;
-    int ans;
+    int result;
     int prev;
 
     int minDiffInBST(TreeNode* root) {
-        ans = inf, prev = inf;
+        result = inf, prev = inf;
         dfs(root);
-        return ans;
+        return result;
     }
 
     void dfs(TreeNode* root) {
         if (!root) return;
         dfs(root->left);
-        ans = min(ans, abs(prev - root->val));
+        result = min(result, abs(prev - root->val));
         prev = root->val;
         dfs(root->right);
     }

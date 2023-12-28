@@ -1,43 +1,35 @@
-/*
-// Definition for a Node.
 class Node {
 public:
-    int val;
-    Node* next;
-    Node* random;
+  int val;
+  Node* next;
+  Node* random;
 
-    Node(int _val) {
-        val = _val;
-        next = NULL;
-        random = NULL;
-    }
+  explicit Node(const int val) {
+    this->val = val;
+    next = nullptr;
+    random = nullptr;
+  }
 };
-*/
+
 class Solution {
 public:
-    Node* copyRandomList(Node* head) {
-        if (!head) {
-            return nullptr;
-        }
-        for (Node* cur = head; cur;) {
-            Node* node = new Node(cur->val);
-            node->next = cur->next;
-            cur->next = node;
-            cur = node->next;
-        }
-        for (Node* cur = head; cur; cur = cur->next->next) {
-            if (cur->random) {
-                cur->next->random = cur->random->next;
-            }
-        }
-        Node* ans = head->next;
-        for (Node* cur = head; cur;) {
-            Node* nxt = cur->next;
-            if (nxt) {
-                cur->next = nxt->next;
-            }
-            cur = nxt;
-        }
-        return ans;
+  Node* copyRandomList(Node* head) {
+    if (not head) { return nullptr; }
+    for (auto current = head; current;) {
+      const auto node = new Node(current->val);
+      node->next = current->next;
+      current->next = node;
+      current = node->next;
     }
+    for (auto current = head; current; current = current->next->next) {
+      if (current->random) { current->next->random = current->random->next; }
+    }
+    const auto result = head->next;
+    for (auto current = head; current;) {
+      const auto node = current->next;
+      if (node) { current->next = node->next; }
+      current = node;
+    }
+    return result;
+  }
 };

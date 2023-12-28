@@ -9,22 +9,22 @@ struct ListNode {
 class Solution {
 public:
   auto partition(ListNode *head, int x) {
-    ListNode *d1 = new ListNode();
-    ListNode *d2 = new ListNode();
-    ListNode *t1 = d1;
-    ListNode *t2 = d2;
-    while (head) {
-      if (head->val < x) {
-        t1->next = head;
-        t1 = t1->next;
+    ListNode l, m;
+    ListNode *less = &l;
+    ListNode *more = &m;
+
+    for (auto node = head; node; node = node->next) {
+      if (node->val < x) {
+        less->next = node;
+        less = less->next;
       } else {
-        t2->next = head;
-        t2 = t2->next;
+        more->next = node;
+        more = more->next;
       }
-      head = head->next;
     }
-    t1->next = d2->next;
-    t2->next = nullptr;
-    return d1->next;
+
+    less->next = m.next;
+    more->next = nullptr;
+    return l.next;
   }
 };

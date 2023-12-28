@@ -1,25 +1,26 @@
+#include <stack>
+#include <string>
+#include <vector>
+
 class Solution {
 public:
-    int evalRPN(vector<string>& tokens) {
-        stack<int> stk;
-        for (auto& t : tokens) {
-            if (t.size() > 1 or isdigit(t[0])) {
-                stk.push(stoi(t));
-            } else {
-                int y = stk.top();
-                stk.pop();
-                int x = stk.top();
-                stk.pop();
-                if (t[0] == '+')
-                    stk.push(x + y);
-                else if (t[0] == '-')
-                    stk.push(x - y);
-                else if (t[0] == '*')
-                    stk.push(x * y);
-                else
-                    stk.push(x / y);
-            }
+  int evalRPN(const std::vector<std::string>& tokens) {
+    std::stack<int> stk;
+    for (auto& token: tokens) {
+      if (token.size() > 1 or isdigit(token[0])) { stk.push(stoi(token)); } else {
+        const int y = stk.top();
+        stk.pop();
+        const int x = stk.top();
+        stk.pop();
+
+        switch (token[0]) {
+          case '+': stk.push(x + y); break;
+          case '-': stk.push(x - y); break;
+          case '*': stk.push(x * y); break;
+          default: stk.push(x / y);
         }
-        return stk.top();
+      }
     }
+    return stk.top();
+  }
 };

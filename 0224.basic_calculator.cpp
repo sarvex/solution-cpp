@@ -1,35 +1,33 @@
+#include <stack>
+#include <string>
+
 class Solution {
 public:
-    int calculate(string s) {
-        stack<int> stk;
-        int ans = 0, sign = 1;
-        int n = s.size();
-        for (int i = 0; i < n; ++i) {
-            if (isdigit(s[i])) {
-                int x = 0;
-                int j = i;
-                while (j < n and isdigit(s[j])) {
-                    x = x * 10 + (s[j] - '0');
-                    ++j;
-                }
-                ans += sign * x;
-                i = j - 1;
-            } else if (s[i] == '+') {
-                sign = 1;
-            } else if (s[i] == '-') {
-                sign = -1;
-            } else if (s[i] == '(') {
-                stk.push(ans);
-                stk.push(sign);
-                ans = 0;
-                sign = 1;
-            } else if (s[i] == ')') {
-                ans *= stk.top();
-                stk.pop();
-                ans += stk.top();
-                stk.pop();
-            }
+  int calculate(const std::string& s) {
+    std::stack<std::pair<int, int>> stk;
+    const int n = s.size();
+    int result = 0, sign = 1;
+    for (int i = 0; i < n; ++i) {
+      if (isdigit(s[i])) {
+        int x = 0;
+        while (i < n and isdigit(s[i])) {
+          x = x * 10 + (s[i++] - '0');
         }
-        return ans;
+        result += sign * x;
+        --i;
+      } else if (s[i] == '+') {
+        sign = 1;
+      } else if (s[i] == '-') {
+        sign = -1;
+      } else if (s[i] == '(') {
+        stk.push({result, sign});
+        result = 0;
+        sign = 1;
+      } else if (s[i] == ')') {
+        result = stk.top().first + (stk.top().second * result);
+        stk.pop();
+      }
     }
+    return result;
+  }
 };

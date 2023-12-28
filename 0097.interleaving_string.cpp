@@ -1,28 +1,26 @@
 #include <string>
-
-using std::string;
+#include <vector>
 
 class Solution {
 public:
-  auto isInterleave(string s1, string s2, string s3) {
-    int m = s1.size(), n = s2.size();
+  auto isInterleave(std::string s1, std::string s2, std::string s3) {
+    const int m = s1.size(), n = s2.size();
     if (m + n != s3.size()) {
       return false;
     }
-    bool f[n + 1];
-    memset(f, false, sizeof(f));
-    f[0] = true;
-    for (int i = 0; i <= m; ++i) {
-      for (int j = 0; j <= n; ++j) {
-        int k = i + j - 1;
+    std::vector<bool> result(n + 1);
+    result[0] = true;
+    for (int i = 1; i <= m; ++i) {
+      for (int j = 1; j <= n; ++j) {
+        const int k = i + j - 1;
         if (i) {
-          f[j] &= s1[i - 1] == s3[k];
+          result[j] = s1[i - 1] == s3[k] and result[j];
         }
         if (j) {
-          f[j] |= (s2[j - 1] == s3[k] and f[j - 1]);
+          result[j] = (s2[j - 1] == s3[k] and result[j - 1]) or result[j];
         }
       }
     }
-    return f[n];
+    return result[n];
   }
 };

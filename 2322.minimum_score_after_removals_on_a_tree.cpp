@@ -4,7 +4,7 @@ public:
     int s;
     int s1;
     int n;
-    int ans = INT_MAX;
+    int result = INT_MAX;
     vector<vector<int>> g;
 
     int minimumScore(vector<int>& nums, vector<vector<int>>& edges) {
@@ -23,7 +23,7 @@ public:
                 dfs2(i, -1, j);
             }
         }
-        return ans;
+        return result;
     }
 
     int dfs(int i, int fa, int x) {
@@ -42,7 +42,7 @@ public:
                 int b = s1 ^ a;
                 int c = s ^ s1;
                 int t = max(max(a, b), c) - min(min(a, b), c);
-                ans = min(ans, t);
+                result = min(result, t);
             }
         return res;
     }

@@ -7,26 +7,25 @@ using std::vector;
 class Solution {
 public:
   static auto isMatch(const std::string& s, const std::string& p) {
-    const int m = s.size();
-    const int n = p.size();
+    const int m = s.length();
+    const int n = p.length();
+    vector result(m + 1, vector<bool>(n + 1));
+    result[0][0] = true;
 
-    bool f[m + 1][n + 1];
-    memset(f, false, sizeof f);
+    auto match = [&](const int i, const int j) { return j >= 0 && p[j] == '.' || s[i] == p[j]; };
 
-    f[0][0] = true;
+    for (int j = 0; j < n; ++j)
+      if (p[j] == '*' && result[0][j - 1])
+        result[0][j + 1] = true;
 
-    for (int i = 0; i <= m; ++i) {
-      for (int j = 1; j <= n; ++j) {
-        if (p[j - 1] == '*') {
-          f[i][j] = f[i][j - 2];
-          if (i and (p[j - 2] == '.' or p[j - 2] == s[i - 1])) {
-            f[i][j] |= f[i - 1][j];
-          }
-        } else if (i and (p[j - 1] == '.' or p[j - 1] == s[i - 1])) {
-          f[i][j] = f[i - 1][j - 1];
+    for (int i = 0; i < m; ++i)
+      for (int j = 0; j < n; ++j)
+        if (p[j] == '*') {
+          result[i + 1][j + 1] = result[i + 1][j - 1] || (match(i, j - 1) && result[i][j + 1]);
+        } else if (match(i, j)) {
+          result[i + 1][j + 1] = result[i][j];
         }
-      }
-    }
-    return f[m][n];
+
+    return result[m][n];
   }
 };

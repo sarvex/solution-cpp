@@ -11,11 +11,11 @@
  */
 class Solution {
 public:
-    int ans;
+    int result;
     int averageOfSubtree(TreeNode* root) {
-        ans = 0;
+        result = 0;
         dfs(root);
-        return ans;
+        return result;
     }
 
     vector<int> dfs(TreeNode* root) {
@@ -24,7 +24,7 @@ public:
         auto r = dfs(root->right);
         int s = l[0] + r[0] + root->val;
         int n = l[1] + r[1] + 1;
-        if (s / n == root->val) ++ans;
+        if (s / n == root->val) ++result;
         return {s, n};
     }
 };

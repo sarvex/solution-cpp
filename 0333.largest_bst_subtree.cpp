@@ -11,12 +11,12 @@
  */
 class Solution {
 public:
-    int ans;
+    int result;
 
     int largestBSTSubtree(TreeNode* root) {
-        ans = 0;
+        result = 0;
         dfs(root);
-        return ans;
+        return result;
     }
 
     vector<int> dfs(TreeNode* root) {
@@ -24,7 +24,7 @@ public:
         auto left = dfs(root->left);
         auto right = dfs(root->right);
         if (left[1] < root->val and root->val < right[0]) {
-            ans = max(ans, left[2] + right[2] + 1);
+            result = max(result, left[2] + right[2] + 1);
             return {min(root->val, left[0]), max(root->val, right[1]), left[2] + right[2] + 1};
         }
         return {INT_MIN, INT_MAX, 0};

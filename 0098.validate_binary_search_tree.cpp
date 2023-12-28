@@ -1,34 +1,41 @@
 #include <functional>
 
-using std::function;
-
 struct TreeNode {
   int val;
-  TreeNode *left;
-  TreeNode *right;
-  TreeNode() : val(0), left(nullptr), right(nullptr) {}
-  explicit TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right)
-      : val(x), left(left), right(right) {}
+  TreeNode* left;
+  TreeNode* right;
+
+  TreeNode() :
+    val(0), left(nullptr), right(nullptr) {}
+
+  explicit TreeNode(const int x) :
+    val(x), left(nullptr), right(nullptr) {}
+
+  TreeNode(const int x, TreeNode* left, TreeNode* right) :
+    val(x), left(left), right(right) {}
 };
 
 class Solution {
 public:
-  auto isValidBST(TreeNode *root) {
-    TreeNode *prev = nullptr;
+  bool isValidBSTFast(TreeNode* root) {
+    std::function<bool(TreeNode*, TreeNode*, TreeNode*)> validate = [&](TreeNode* node, TreeNode* low, TreeNode* high) {
+      if ((low and node->val <= low->val) or (high and node->val >= high->val)) return false;
+      return (node->left ? validate(node->left, low, node) : true) and (node->right ? validate(node->right, node, high) : true);
+    };
+    return root ? validate(root, nullptr, nullptr) : true;
+  }
 
-    function<bool(TreeNode *)> dfs = [&](TreeNode *node) {
-      if (!node)
-        return true;
-      if (!dfs(node->left))
-        return false;
-      if (prev and prev->val >= node->val)
-        return false;
+  auto isValidBST(TreeNode* root) {
+    if (not root) return true;
+    TreeNode* prev = nullptr;
+
+    std::function<bool(TreeNode*)> valid = [&](TreeNode* node) {
+      if ((node->left and not valid(node->left)) or (prev and prev->val >= node->val)) return false;
       prev = node;
-      if (!dfs(node->right))
-        return false;
+      if (node->right and not valid(node->right)) return false;
       return true;
     };
-    return dfs(root);
+
+    return valid(root);
   }
 };
