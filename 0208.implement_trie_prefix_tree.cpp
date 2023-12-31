@@ -1,42 +1,42 @@
-class Trie {
-private:
-    vector<Trie*> children;
-    bool isEnd;
+#include <string>
+#include <vector>
 
-    Trie* searchPrefix(string s) {
-        Trie* node = this;
-        for (char c : s) {
-            int idx = c - 'a';
-            if (!node->children[idx]) return nullptr;
-            node = node->children[idx];
-        }
-        return node;
+class Trie {
+  std::vector<Trie*> children_;
+  bool is_end_;
+
+  Trie* searchPrefix(const std::string& s) {
+    auto node = this;
+    for (auto& c: s) {
+      const int idx = c - 'a';
+      if (not node->children_[idx]) return nullptr;
+      node = node->children_[idx];
     }
+    return node;
+  }
 
 public:
-    Trie()
-        : children(26)
-        , isEnd(false) {}
+  Trie() : children_(26) , is_end_(false) {}
 
-    void insert(string word) {
-        Trie* node = this;
-        for (char c : word) {
-            int idx = c - 'a';
-            if (!node->children[idx]) node->children[idx] = new Trie();
-            node = node->children[idx];
-        }
-        node->isEnd = true;
+  void insert(const std::string& word) {
+    auto node = this;
+    for (const auto c: word) {
+      const int idx = c - 'a';
+      if (! node->children_[idx]) node->children_[idx] = new Trie();
+      node = node->children_[idx];
     }
+    node->is_end_ = true;
+  }
 
-    bool search(string word) {
-        Trie* node = searchPrefix(word);
-        return node != nullptr and node->isEnd;
-    }
+  bool search(const std::string& word) {
+    const auto node = searchPrefix(word);
+    return node and node->is_end_;
+  }
 
-    bool startsWith(string prefix) {
-        Trie* node = searchPrefix(prefix);
-        return node != nullptr;
-    }
+  bool startsWith(const std::string& prefix) {
+    const auto node = searchPrefix(prefix);
+    return node != nullptr;
+  }
 };
 
 /**

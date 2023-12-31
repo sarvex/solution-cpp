@@ -1,62 +1,47 @@
-class trie {
+#include <functional>
+#include <string>
+#include <vector>
+
+class Trie {
+  std::vector<Trie*> children_;
+  bool is_end_;
 public:
-    vector<trie*> children;
-    bool is_end;
+  Trie() {
+    children_ = std::vector<Trie*>(26, nullptr);
+    is_end_ = false;
+  }
 
-    trie() {
-        children = vector<trie*>(26, nullptr);
-        is_end = false;
+  void insert(const std::string& word) {
+    auto cur = this;
+    for (char c: word) {
+      c -= 'a';
+      if (cur->children_[c] == nullptr) cur->children_[c] = new Trie;
+      cur = cur->children_[c];
     }
-
-    void insert(const string& word) {
-        trie* cur = this;
-        for (char c : word) {
-            c -= 'a';
-            if (cur->children[c] == nullptr) {
-                cur->children[c] = new trie;
-            }
-            cur = cur->children[c];
-        }
-        cur->is_end = true;
-    }
+    cur->is_end_ = true;
+  }
 };
 
 class WordDictionary {
-private:
-    trie* root;
+  Trie* root_;
 
 public:
-    WordDictionary()
-        : root(new trie) {}
+  WordDictionary() :
+    root_(new Trie) {}
 
-    void addWord(string word) {
-        root->insert(word);
-    }
+  void addWord(const std::string& word) { root_->insert(word); }
 
-    bool search(string word) {
-        return dfs(word, 0, root);
-    }
+  bool search(const std::string& word) {
+    std::function<bool(int, Trie*)> dfs = [&](const int i, const Trie* cur) {
+      if (i == word.size()) return cur->is_end_;
+      if (auto& c = word[i]; c != '.') {
+        if (auto child = cur->children_[c - 'a']; child != nullptr and dfs(i + 1, child)) { return true; }
+      } else { for (auto child: cur->children_) { if (child != nullptr and dfs(i + 1, child)) { return true; } } }
+      return false;
+    };
 
-private:
-    bool dfs(const string& word, int i, trie* cur) {
-        if (i == word.size()) {
-            return cur->is_end;
-        }
-        char c = word[i];
-        if (c != '.') {
-            trie* child = cur->children[c - 'a'];
-            if (child != nullptr and dfs(word, i + 1, child)) {
-                return true;
-            }
-        } else {
-            for (trie* child : cur->children) {
-                if (child != nullptr and dfs(word, i + 1, child)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    return dfs(0, root_);
+  }
 };
 
 /**

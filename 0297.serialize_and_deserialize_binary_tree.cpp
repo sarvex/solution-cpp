@@ -1,48 +1,53 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
+#include <functional>
+#include <sstream>
+#include <string>
+
+struct TreeNode {
+  int val;
+  TreeNode* left;
+  TreeNode* right;
+
+  explicit TreeNode(int x) :
+    val(x), left(NULL), right(NULL) {}
+};
+
 class Codec {
+
 public:
-    // Encodes a tree to a single string.
-    string serialize(TreeNode* root) {
-        if (!root) return "";
-        string s = "";
-        preorder(root, s);
-        return s;
-    }
+  std::string serialize(TreeNode* root) {
+    if (not root) return "";
 
-    void preorder(TreeNode* root, string& s) {
-        if (!root)
-            s += "# ";
-        else {
-            s += to_string(root->val) + " ";
-            preorder(root->left, s);
-            preorder(root->right, s);
-        }
-    }
+    std::ostringstream stream;
+    std::function<void(TreeNode*)> encode = [&](const TreeNode* node) {
+      if (not node)
+        stream << "# ";
+      else {
+        stream << std::to_string(node->val) << " ";
+        encode(node->left);
+        encode(node->right);
+      }
+    };
 
-    // Decodes your encoded data to tree.
-    TreeNode* deserialize(string data) {
-        if (data == "") return nullptr;
-        stringstream ss(data);
-        return deserialize(ss);
-    }
+    encode(root);
+    return stream.str();
+  }
 
-    TreeNode* deserialize(stringstream& ss) {
-        string first;
-        ss >> first;
-        if (first == "#") return nullptr;
-        TreeNode* root = new TreeNode(stoi(first));
-        root->left = deserialize(ss);
-        root->right = deserialize(ss);
-        return root;
-    }
+  TreeNode* deserialize(const std::string& data) {
+    if (data.empty()) return nullptr;
+    std::istringstream stream(data);
+
+    std::function<TreeNode*()> decode = [&]() -> TreeNode* {
+      std::string first;
+      stream >> first;
+      if (first == "#") return nullptr;
+      auto* node = new TreeNode(stoi(first));
+      node->left = decode();
+      node->right = decode();
+      return node;
+    };
+
+    return decode();
+  }
 };
 
 // Your Codec object will be instantiated and called as such:

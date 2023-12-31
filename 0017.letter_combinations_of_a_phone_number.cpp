@@ -1,27 +1,23 @@
+#include <functional>
 #include <string>
 #include <utility>
 #include <vector>
 
-using std::vector;
-using std::string;
-
 class Solution {
+
+
 public:
-  auto letterCombinations(const string& digits) {
-    vector<string> result = {""};
-    if (digits.empty()) return result;
+  auto letterCombinations(const std::string& digits) {
+    if (digits.empty()) return {};
 
-    const vector<string> map {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    const std::vector<std::string> map{ "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+    std::vector<std::string> result {""};
 
-    for (const auto& i: digits) {
-      string s = map[i - '2'];
-      vector<string> t;
-      for (const auto& a: result) {
-        for (const auto& b: s) {
-          t.push_back(a + b);
-        }
-      }
-      result = std::move(t);
+    for (auto& digit: digits) {
+      std::string chars = map[digit - '2'];
+      std::vector<std::string> temp;
+      for (auto& elem: result) { for (const auto& ch: chars) { temp.push_back(elem + ch); } }
+      result = std::move(temp);
     }
     return result;
   }

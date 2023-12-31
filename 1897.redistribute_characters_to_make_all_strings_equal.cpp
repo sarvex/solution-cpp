@@ -1,16 +1,13 @@
+#include <algorithm>
+#include <string>
+#include <vector>
+
 class Solution {
 public:
-    bool makeEqual(vector<string>& words) {
-        vector<int> counter(26, 0);
-        for (string word : words) {
-            for (char c : word) {
-                ++counter[c - 'a'];
-            }
-        }
-        int n = words.size();
-        for (int count : counter) {
-            if (count % n != 0) return false;
-        }
-        return true;
-    }
+  bool makeEqual(const std::vector<std::string>& words) {
+    std::vector counter(26, 0);
+    for (auto& word: words) { for (const auto c: word) { ++counter[c - 'a']; } }
+    const int n = words.size();
+    return all_of(counter.cbegin(), counter.cend(), [] (const int i) {return i % n == 0;});
+  }
 };

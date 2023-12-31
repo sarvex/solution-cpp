@@ -1,39 +1,47 @@
+#include <functional>
+#include <string>
+#include <unordered_map>
+#include <vector>
+
 class Solution {
 public:
-    unordered_map<string, string> p;
-    unordered_map<string, double> w;
+  std::vector<double> calcEquation(
+      const std::vector<std::vector<std::string>>& equations,
+      const std::vector<double>& values,
+      const std::vector<std::vector<std::string>>& queries) {
+    const int n = equations.size();
 
-    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
-        int n = equations.size();
-        for (auto e : equations) {
-            p[e[0]] = e[0];
-            p[e[1]] = e[1];
-            w[e[0]] = 1.0;
-            w[e[1]] = 1.0;
-        }
-        for (int i = 0; i < n; ++i) {
-            vector<string> e = equations[i];
-            string a = e[0], b = e[1];
-            string pa = find(a), pb = find(b);
-            if (pa == pb) continue;
-            p[pa] = pb;
-            w[pa] = w[b] * values[i] / w[a];
-        }
-        int m = queries.size();
-        vector<double> ans(m);
-        for (int i = 0; i < m; ++i) {
-            string c = queries[i][0], d = queries[i][1];
-            ans[i] = p.find(c) == p.end() or p.find(d) == p.end() or find(c) != find(d) ? -1.0 : w[c] / w[d];
-        }
-        return ans;
-    }
+    std::unordered_map<std::string, std::string> p;
+    std::unordered_map<std::string, double> w;
 
-    string find(string x) {
-        if (p[x] != x) {
-            string origin = p[x];
-            p[x] = find(p[x]);
-            w[x] *= w[origin];
-        }
-        return p[x];
+    std::function<std::string(const std::string&)> find = [&](const std::string& x) {
+      if (p[x] != x) {
+        const std::string origin = p[x];
+        p[x] = find(p[x]);
+        w[x] *= w[origin];
+      }
+      return p[x];
+    };
+
+    for (auto e: equations) {
+      p[e[0]] = e[0];
+      p[e[1]] = e[1];
+      w[e[0]] = 1.0;
+      w[e[1]] = 1.0;
     }
+    for (int i = 0; i < n; ++i) {
+      std::vector<std::string> e = equations[i];
+      std::string pa = find(e[0]), pb = find(e[1]);
+      if (pa == pb) continue;0
+      p[pa] = pb;
+      w[pa] = w[e[1]] * values[i] / w[e[0]];
+    }
+    const int m = queries.size();
+    std::vector result(m, -1.0);
+    for (int i = 0; i < m; ++i) {
+      if (const std::string c = queries[i][0], d = queries[i][1]; p.contains(c) and p.contains(d) and find(c) == find(d))
+        result[i] = w[c] / w[d];
+    }
+    return result;
+  }
 };

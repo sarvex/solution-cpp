@@ -2,32 +2,26 @@
 #include <algorithm>
 #include <functional>
 
-using std::function;
-using std::ranges::sort;
-using std::vector;
-
 class Solution {
 public:
-  vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+  auto combinationSum(const std::vector<int>& candidates, int target) {
+    const int n = candidates.size();
+    sort(candidates.begin(), candidates.end());
+    std::vector<std::vector<int>> result;
+    std::vector<int> integers;
 
-    sort(candidates);
-    vector<vector<int>> result;
-    vector<int> t;
-
-    function<void(int, int)> dfs = [&](int i, int s) {
+    std::function<void(int, int)> sum = [&](const int i, const int s) {
       if (s == 0) {
-        result.emplace_back(t);
+        result.emplace_back(integers);
         return;
       }
-      if (i >= candidates.size() or s < candidates[i]) {
-        return;
-      }
-      dfs(i + 1, s);
-      t.push_back(candidates[i]);
-      dfs(i, s - candidates[i]);
-      t.pop_back();
+      if (i >= n or s < candidates[i]) return;
+      sum(i + 1, s);
+      integers.push_back(candidates[i]);
+      sum(i, s - candidates[i]);
+      integers.pop_back();
     };
-    dfs(0, target);
+    sum(0, target);
     return result;
   }
 };

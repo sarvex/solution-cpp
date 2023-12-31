@@ -1,31 +1,32 @@
+#include <queue>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+
 class Solution {
 public:
-    int minMutation(string start, string end, vector<string>& bank) {
-        unordered_set<string> s;
-        for (auto& b : bank) s.insert(b);
-        unordered_map<char, string> mp;
-        mp['A'] = "TCG";
-        mp['T'] = "ACG";
-        mp['C'] = "ATG";
-        mp['G'] = "ATC";
-        queue<pair<string, int>> q;
-        q.push({start, 0});
-        while (!q.empty()) {
-            auto p = q.front();
-            q.pop();
-            string t = p.first;
-            int step = p.second;
-            if (t == end) return step;
-            for (int i = 0; i < t.size(); ++i) {
-                for (char c : mp[t[i]]) {
-                    string next = t.substr(0, i) + c + t.substr(i + 1, t.size() - i - 1);
-                    if (s.count(next)) {
-                        q.push({next, step + 1});
-                        s.erase(next);
-                    }
-                }
-            }
+  int minMutation(std::string& startGene, const std::string& endGene, const std::vector<std::string>& bank) {
+    std::unordered_set<std::string> s;
+    for (auto& b: bank) s.insert(b);
+    std::unordered_map<char, std::string> mp{ { 'A', "TCG" }, { 'T', "ACG" }, { 'C', "ATG" }, { 'G', "ATC" }, };
+    std::queue<std::pair<std::string, int>> q;
+    q.emplace( startGene, 0 );
+    while (! q.empty()) {
+      auto p = q.front();
+      q.pop();
+      std::string t = p.first;
+      const int step = p.second;
+      if (t == endGene) return step;
+      for (int i = 0; i < t.size(); ++i) {
+        for (const auto& c: mp[t[i]]) {
+          if (std::string next = t.substr(0, i) + c + t.substr(i + 1, t.size() - i - 1); s.contains(next)) {
+            q.emplace( next, step + 1 );
+            s.erase(next);
+          }
         }
-        return -1;
+      }
     }
+    return -1;
+  }
 };

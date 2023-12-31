@@ -1,7 +1,7 @@
 class Trie {
 public:
     vector<Trie*> children;
-    bool isEnd = false;
+    bool is_end_ = false;
 
     Trie() {
         children.resize(26);
@@ -14,7 +14,7 @@ public:
             if (!node->children[c]) node->children[c] = new Trie();
             node = node->children[c];
         }
-        node->isEnd = true;
+        node->is_end_ = true;
     }
 };
 
@@ -31,7 +31,7 @@ public:
                 int idx = text[j] - 'a';
                 if (!node->children[idx]) break;
                 node = node->children[idx];
-                if (node->isEnd) ans.push_back({i, j});
+                if (node->is_end_) ans.push_back({i, j});
             }
         }
         return ans;

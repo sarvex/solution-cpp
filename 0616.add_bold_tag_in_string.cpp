@@ -1,11 +1,11 @@
 class Trie {
 public:
     vector<Trie*> children;
-    bool isEnd;
+    bool is_end_;
 
     Trie() {
         children.resize(128);
-        isEnd = false;
+        is_end_ = false;
     }
 
     void insert(string word) {
@@ -14,7 +14,7 @@ public:
             if (!node->children[c]) node->children[c] = new Trie();
             node = node->children[c];
         }
-        node->isEnd = true;
+        node->is_end_ = true;
     }
 };
 
@@ -31,7 +31,7 @@ public:
                 int idx = s[j];
                 if (!node->children[idx]) break;
                 node = node->children[idx];
-                if (node->isEnd) pairs.push_back({i, j});
+                if (node->is_end_) pairs.push_back({i, j});
             }
         }
         if (pairs.empty()) return s;

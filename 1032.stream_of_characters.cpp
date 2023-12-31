@@ -1,11 +1,11 @@
 class Trie {
 public:
     vector<Trie*> children;
-    bool isEnd;
+    bool is_end_;
 
     Trie()
         : children(26)
-        , isEnd(false) {}
+        , is_end_(false) {}
 
     void insert(string& w) {
         Trie* node = this;
@@ -17,7 +17,7 @@ public:
             }
             node = node->children[idx];
         }
-        node->isEnd = true;
+        node->is_end_ = true;
     }
 
     bool search(string& w) {
@@ -28,7 +28,7 @@ public:
                 return false;
             }
             node = node->children[idx];
-            if (node->isEnd) {
+            if (node->is_end_) {
                 return true;
             }
         }

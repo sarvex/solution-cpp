@@ -1,31 +1,27 @@
 #include <bitset>
 #include <functional>
 
-using std::bitset;
-using std::function;
-
 class Solution {
 public:
-  auto totalNQueens(int n) {
-    bitset<10> cols;
-    bitset<20> dg;
-    bitset<20> udg;
-    int ans = 0;
-    function<void(int)> dfs = [&](int i) {
+  auto totalNQueens(const int n) {
+    std::bitset<10> cols;
+    std::bitset<20> dg;
+    std::bitset<20> udg;
+    int result = 0;
+    std::function<void(int)> search = [&](const int i) {
       if (i == n) {
-        ++ans;
+        ++result;
         return;
       }
       for (int j = 0; j < n; ++j) {
-        int a = i + j, b = i - j + n;
-        if (cols[j] or dg[a] or udg[b])
-          continue;
-        cols[j] = dg[a] = udg[b] = 1;
-        dfs(i + 1);
-        cols[j] = dg[a] = udg[b] = 0;
+        if (const int a = i + j, b = i - j + n; not cols[j] and not dg[a] and not udg[b]) {
+          cols[j] = dg[a] = udg[b] = true;
+          search(i + 1);
+          cols[j] = dg[a] = udg[b] = false;
+        }
       }
     };
-    dfs(0);
-    return ans;
+    search(0);
+    return result;
   }
 };

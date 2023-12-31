@@ -1,30 +1,36 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+#include <functional>
+#include <vector>
+
+struct TreeNode {
+  int val;
+  TreeNode* left;
+  TreeNode* right;
+
+  TreeNode() :
+    val(0), left(nullptr), right(nullptr) {}
+
+  explicit TreeNode(const int x) :
+    val(x), left(nullptr), right(nullptr) {}
+
+  TreeNode(const int x, TreeNode* left, TreeNode* right) :
+    val(x), left(left), right(right) {}
+};
+
 class Solution {
 public:
-    int result;
-    int averageOfSubtree(TreeNode* root) {
-        result = 0;
-        dfs(root);
-        return result;
-    }
+  int averageOfSubtree(TreeNode* root) {
+    int result = 0;
 
-    vector<int> dfs(TreeNode* root) {
-        if (!root) return {0, 0};
-        auto l = dfs(root->left);
-        auto r = dfs(root->right);
-        int s = l[0] + r[0] + root->val;
-        int n = l[1] + r[1] + 1;
-        if (s / n == root->val) ++result;
-        return {s, n};
-    }
+    std::function<std::pair<int, int>(TreeNode*)> average = [&] (const TreeNode* node) {
+      const auto [left_sum, left_count] = node->left ? average (node->left) : std::make_pair(0, 0);
+      const auto [right_sum, right_count] = node->right ? average (node->right) : std::make_pair(0, 0);
+      const auto sum = left_sum + right_sum + node->val;
+      const auto count = left_count + right_count + 1;
+      if (sum / count == node->val) ++result;
+      return std::make_pair(sum, count);
+    };
+
+    average(root);
+    return result;
+  }
 };

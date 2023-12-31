@@ -7,11 +7,11 @@ public:
   std::vector<Trie*> children;
   int ref;
 
-  Trie() : children(26, nullptr) , ref(-1) {}
+  Trie() : children(26, nullptr), ref(-1) {}
 
-  void insert(const std::string& w, int ref) {
-    Trie* node = this;
-    for (char c: w) {
+  void insert(const std::string& word, int ref) {
+    auto node = this;
+    for (char c: word) {
       c -= 'a';
       if (not node->children[c]) { node->children[c] = new Trie(); }
       node = node->children[c];
@@ -23,7 +23,7 @@ public:
 class Solution {
 public:
   auto findWords(std::vector<std::vector<char>>& board, const std::vector<std::string>& words) {
-    Trie* tree = new Trie();
+    const auto tree = new Trie();
     for (int i = 0; i < words.size(); ++i) { tree->insert(words[i], i); }
     std::vector<std::string> result;
     const int m = board.size(), n = board[0].size();
