@@ -9,18 +9,18 @@ using std::sort;
 class BinaryIndexedTree {
 private:
   int inf = 1 << 30;
-  int n;
-  vector<int> c;
+  int n_;
+  vector<int> c_;
 
 public:
   BinaryIndexedTree(int n) {
-    this->n = n;
-    c.resize(n + 1, inf);
+    this->n_ = n;
+    c_.resize(n + 1, inf);
   }
 
   void update(int x, int v) {
-    while (x <= n) {
-      c[x] = min(c[x], v);
+    while (x <= n_) {
+      c_[x] = min(c_[x], v);
       x += x & -x;
     }
   }
@@ -28,7 +28,7 @@ public:
   int query(int x) {
     int mi = inf;
     while (x > 0) {
-      mi = min(mi, c[x]);
+      mi = min(mi, c_[x]);
       x -= x & -x;
     }
     return mi == inf ? -1 : mi;

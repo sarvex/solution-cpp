@@ -1,16 +1,16 @@
 class BinaryIndexedTree {
 private:
-    int n;
+    int n_;
     vector<int> c;
 
 public:
     BinaryIndexedTree(int n) {
-        this->n = n;
+        this->n_ = n;
         c.resize(n + 1, 0);
     }
 
     void update(int x, int v) {
-        while (x <= n) {
+        while (x <= n_) {
             c[x] = max(c[x], v);
             x += x & -x;
         }

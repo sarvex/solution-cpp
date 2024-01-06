@@ -1,17 +1,17 @@
 class BinaryIndexedTree {
 private:
-    int n;
+    int n_;
     vector<long long> c;
     const long long inf = 1e18;
 
 public:
     BinaryIndexedTree(int n) {
-        this->n = n;
+        this->n_ = n;
         c.resize(n + 1, -inf);
     }
 
     void update(int x, long long v) {
-        while (x <= n) {
+        while (x <= n_) {
             c[x] = max(c[x], v);
             x += x & -x;
         }

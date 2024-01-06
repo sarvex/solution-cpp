@@ -2,10 +2,6 @@
 #include <queue>
 #include <vector>
 
-using std::function;
-using std::priority_queue;
-using std::vector;
-
 struct ListNode {
   int val;
   ListNode* next;

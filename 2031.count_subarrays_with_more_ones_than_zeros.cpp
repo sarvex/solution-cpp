@@ -1,15 +1,15 @@
 class BinaryIndexedTree {
 public:
-    int n;
+    int n_;
     vector<int> c;
 
-    BinaryIndexedTree(int _n)
-        : n(_n + 1e5 + 1)
-        , c(_n + 1 + 1e5 + 1) {}
+    BinaryIndexedTree(int n)
+        : n_(n + 1e5 + 1)
+        , c(n + 1 + 1e5 + 1) {}
 
     void update(int x, int delta) {
         x += 1e5 + 1;
-        while (x <= n) {
+        while (x <= n_) {
             c[x] += delta;
             x += lowbit(x);
         }

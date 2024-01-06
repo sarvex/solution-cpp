@@ -1,12 +1,14 @@
+#include <vector>
+
 class Solution {
 public:
-    int rob(vector<int>& nums) {
-        int f = 0, g = 0;
-        for (int& x : nums) {
-            int ff = max(f, g);
-            g = f + x;
-            f = ff;
-        }
-        return max(f, g);
+  auto rob(const std::vector<int>& nums) {
+    int result = 0, last = 0;
+    for (auto& x: nums) {
+      const int mx = std::max(result, last);
+      last = result + x;
+      result = mx;
     }
+    return std::max(result, last);
+  }
 };

@@ -1,13 +1,15 @@
+#include <vector>
+
 class Solution {
 public:
-    int singleNumber(vector<int>& nums) {
-        int a = 0, b = 0;
-        for (int c : nums) {
-            int aa = (~a & b & c) | (a & ~b & ~c);
-            int bb = ~a & (b ^ c);
-            a = aa;
-            b = bb;
-        }
-        return b;
+  int singleNumber(const std::vector<int>& nums) {
+    int a = 0, b = 0;
+    for (auto& num: nums) {
+      const int aa = (~a & b & num) | (a & ~b & ~num);
+      const int bb = ~a & (b ^ num);
+      a = aa;
+      b = bb;
     }
+    return b;
+  }
 };

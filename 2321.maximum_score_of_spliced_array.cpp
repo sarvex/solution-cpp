@@ -1,25 +1,24 @@
+#include <numeric>
+#include <vector>
+
 class Solution {
 public:
-    int maximumsSplicedArray(vector<int>& nums1, vector<int>& nums2) {
-        int s1 = 0, s2 = 0, n = nums1.size();
-        for (int i = 0; i < n; ++i) {
-            s1 += nums1[i];
-            s2 += nums2[i];
-        }
-        return max(s2 + f(nums1, nums2), s1 + f(nums2, nums1));
-    }
+  int maximumsSplicedArray(const std::vector<int>& nums1, const std::vector<int>& nums2) {
+    const auto find = [](const std::vector<int>& n1, const std::vector<int>& n2) {
+      const int n = n1.size();
+      int t = n1[0] - n2[0];
+      int mx = t;
+      for (int i = 1; i < n; ++i) {
+        const int v = n1[i] - n2[i];
+        if (t > 0) t += v;
+        else t = v;
+        mx = std::max(mx, t);
+      }
+      return mx;
+    };
 
-    int f(vector<int>& nums1, vector<int>& nums2) {
-        int t = nums1[0] - nums2[0];
-        int mx = t;
-        for (int i = 1; i < nums1.size(); ++i) {
-            int v = nums1[i] - nums2[i];
-            if (t > 0)
-                t += v;
-            else
-                t = v;
-            mx = max(mx, t);
-        }
-        return mx;
-    }
+    return std::max(
+        std::reduce(nums2.begin(), nums2.end()) + find(nums1, nums2),
+        std::reduce(nums1.begin(), nums1.end()) + find(nums2, nums1));
+  }
 };
