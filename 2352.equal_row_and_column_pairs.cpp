@@ -1,19 +1,13 @@
+#include <vector>
+
 class Solution {
 public:
-    int equalPairs(vector<vector<int>>& grid) {
-        int n = grid.size();
-        vector<vector<int>> g(n, vector<int>(n));
-        for (int j = 0; j < n; ++j) {
-            for (int i = 0; i < n; ++i) {
-                g[i][j] = grid[j][i];
-            }
-        }
-        int ans = 0;
-        for (auto& row : grid) {
-            for (auto& col : g) {
-                ans += row == col;
-            }
-        }
-        return ans;
-    }
+  int equalPairs(const std::vector<std::vector<int>>& grid) {
+    const int n = grid.size();
+    std::vector transpose(n, std::vector<int>(n));
+    for (int j = 0; j < n; ++j) for (int i = 0; i < n; ++i) transpose[i][j] = grid[j][i];
+    int result = 0;
+    for (auto& row: grid) for (auto& col: transpose) result += row == col;
+    return result;
+  }
 };

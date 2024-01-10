@@ -1,11 +1,12 @@
+#include <algorithm>
+#include <vector>
+
 class Solution {
 public:
-    vector<bool> kidsWithCandies(vector<int>& candies, int extraCandies) {
-        int mx = *max_element(candies.begin(), candies.end());
-        vector<bool> res;
-        for (int candy : candies) {
-            res.push_back(candy + extraCandies >= mx);
-        }
-        return res;
-    }
+  std::vector<bool> kidsWithCandies(std::vector<int>& candies, const int extraCandies) {
+    const int mx = *max_element(candies.cbegin(), candies.cend());
+    std::vector<bool> result;
+    for (const auto candy: candies) { result.push_back(candy + extraCandies >= mx); }
+    return result;
+  }
 };

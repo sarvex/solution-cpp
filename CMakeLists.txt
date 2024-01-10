@@ -30,6 +30,7 @@ add_executable(solution
     0023.merge_k_sorted_lists.cpp
     0024.swap_nodes_in_pairs.cpp
     0026.remove_duplicates_from_sorted_array.cpp
+    0026.reverse_nodes_in_k_group.cpp
     0027.remove_element.cpp
     0028.find_the_index_of_the_first_occurrence_in_a_string.cpp
     0029.divide_two_integers.cpp
@@ -313,6 +314,8 @@ add_executable(solution
     0333.largest_bst_subtree.cpp
     0334.increasing_triplet_subsequence.cpp
     0335.self_crossing.cpp
+    0336.palindrome_pairs.cpp
+    0336.palindrome_pairs.cpp
     0337.house_robber_iii.cpp
     0338.counting_bits.cpp
     0340.longest_substring_with_at_most_k_distinct_characters.cpp
@@ -362,6 +365,9 @@ add_executable(solution
     0391.perfect_rectangle.cpp
     0392.is_subsequence.cpp
     0393.utf_8_validation.cpp
+    0394.decode_string.cpp
+    0394.decode_string.cpp
+    0394.decode_string.cpp
     0395.longest_substring_with_at_least_k_repeating_characters.cpp
     0396.rotate_function.cpp
     0397.integer_replacement.cpp
@@ -559,6 +565,9 @@ add_executable(solution
     0637.average_of_levels_in_binary_tree.cpp
     0638.shopping_offers.cpp
     0641.design_circular_deque.cpp
+    0643.maximum_average_subarray_i.cpp
+    0643.maximum_average_subarray_i.cpp
+    0643.maximum_average_subarray_i.cpp
     0644.maximum_average_subarray_ii.cpp
     0645.set_mismatch.cpp
     0646.maximum_length_of_pair_chain.cpp
@@ -726,6 +735,7 @@ add_executable(solution
     0822.card_flipping_game.cpp
     0823.binary_trees_with_factors.cpp
     0824.goat_latin.cpp
+    0824.goat_latin.cpp
     0825.friends_of_appropriate_ages.cpp
     0826.most_profit_assigning_work.cpp
     0827.making_a_large_island.cpp
@@ -748,6 +758,7 @@ add_executable(solution
     0845.longest_mountain_in_array.cpp
     0846.hand_of_straights.cpp
     0847.shortest_path_visiting_all_nodes.cpp
+    0848.shifting_letters.cpp
     0848.shifting_letters.cpp
     0849.maximize_distance_to_closest_person.cpp
     0850.rectangle_area_ii.cpp
@@ -1334,6 +1345,8 @@ add_executable(solution
     1528.shuffle_string.cpp
     1529.minimum_suffix_flips.cpp
     1530.number_of_good_leaf_nodes_pairs.cpp
+    1531.string_compression_ii.cpp
+    1531.string_compression_ii.cpp
     1533.find_the_index_of_the_large_integer.cpp
     1534.count_good_triplets.cpp
     1535.find_the_winner_of_an_array_game.cpp
@@ -2477,13 +2490,10 @@ add_executable(solution
     2939.maximum_xor_product.cpp
     2940.find_building_where_alice_and_bob_can_meet.cpp
     2941.maximum_gcd_sum_of_a_subarray.cpp
-    0824.goat_latin.cpp
     2965.find_missing_and_repeated_values.cpp
-    0026.reverse_nodes_in_k_group.cpp
-    1531.string_compression_ii.cpp
-    0336.palindrome_pairs.cpp)
+    2999.count_the_number_of_powerful_integers.cpp
+    3003.maximize_the_number_of_partitions_after_operations.cpp
+    2983.palindrome_rearrangement_queries.cpp
+)
 
-add_executable(0058.length_of_last_word 0058.length_of_last_word.cpp
-    0848.shifting_letters.cpp
-    1531.string_compression_ii.cpp
-    0336.palindrome_pairs.cpp)
+add_executable(0058.length_of_last_word 0058.length_of_last_word.cpp)

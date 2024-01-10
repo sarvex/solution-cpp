@@ -1,18 +1,20 @@
+#include <string>
+
 class Solution {
 public:
-    int maxVowels(string s, int k) {
-        int t = 0, n = s.size();
-        for (int i = 0; i < k; ++i) t += isVowel(s[i]);
-        int ans = t;
-        for (int i = k; i < n; ++i) {
-            t += isVowel(s[i]);
-            t -= isVowel(s[i - k]);
-            ans = max(ans, t);
-        }
-        return ans;
-    }
+  int maxVowels(const std::string& s, const int k) {
+    const int n = s.size();
+    const auto is_vowel = [] (auto& c) { return c == 'a' or c == 'e' or c == 'i' or c == 'o' or c == 'u'; }
 
-    bool isVowel(char c) {
-        return c == 'a' or c == 'e' or c == 'i' or c == 'o' or c == 'u';
+    int count = 0;
+    for (int i = 0; i < k; ++i) count += is_vowel(s[i]);
+    int result = count;
+
+    for (int i = k; i < n; ++i) {
+      count += is_vowel(s[i]);
+      count -= is_vowel(s[i - k]);
+      result = std::max(result, count);
     }
+    return result;
+  }
 };

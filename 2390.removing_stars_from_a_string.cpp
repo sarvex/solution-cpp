@@ -1,14 +1,10 @@
+#include <string>
+
 class Solution {
 public:
-    string removeStars(string s) {
-        string ans;
-        for (char c : s) {
-            if (c == '*') {
-                ans.pop_back();
-            } else {
-                ans.push_back(c);
-            }
-        }
-        return ans;
-    }
+  auto removeStars(const std::string& s) {
+    std::string result;
+    for (auto& c: s) if (c == '*') result.pop_back(); else result.push_back(c);
+    return result;
+  }
 };

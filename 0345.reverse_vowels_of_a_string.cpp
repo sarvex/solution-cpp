@@ -1,23 +1,17 @@
+#include <string>
+#include <vector>
+
 class Solution {
 public:
-    string reverseVowels(string s) {
-        bool vowels[128];
-        memset(vowels, false, sizeof(vowels));
-        for (char c : "aeiouAEIOU") {
-            vowels[c] = true;
-        }
-        int i = 0, j = s.size() - 1;
-        while (i < j) {
-            while (i < j and !vowels[s[i]]) {
-                ++i;
-            }
-            while (i < j and !vowels[s[j]]) {
-                --j;
-            }
-            if (i < j) {
-                swap(s[i++], s[j--]);
-            }
-        }
-        return s;
+  auto reverseVowels(std::string& s) {
+    std::vector vowels(128, false);
+    for (auto& c: "aeiouAEIOU") { vowels[c] = true; }
+    int left = 0, right = s.size() - 1;
+    while (left < right) {
+      while (left < right and ! vowels[s[left]]) ++left;
+      while (left < right and ! vowels[s[right]]) --right;
+      if (left < right) std::swap(s[left++], s[right--]);
     }
+    return s;
+  }
 };
