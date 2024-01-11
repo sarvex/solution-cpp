@@ -1,32 +1,20 @@
 #include <functional>
 #include <string>
 
-using std::function;
-using std::string;
-
 class Solution {
 public:
-  auto isScramble(string s1, string s2) {
-    int n = s1.size();
-    int f[n][n][n + 1];
-    memset(f, -1, sizeof(f));
-    function<bool(int, int, int)> dfs = [&](int i, int j, int k) -> int {
-      if (f[i][j][k] != -1) {
-        return f[i][j][k] == 1;
-      }
-      if (k == 1) {
-        return s1[i] == s2[j];
-      }
+  auto isScramble(const std::string& s1, const std::string& s2) {
+    const int n = s1.size();
+    std::vector result(n, std::vector(n, std::vector(n + 1, -1)));
+    const std::function<int(int, int, int)> search = [&](const int i, const int j, const int k) -> int {
+      if (result[i][j][k] != -1) return result[i][j][k] == 1;
+      if (k == 1) return s1[i] == s2[j];
       for (int h = 1; h < k; ++h) {
-        if (dfs(i, j, h) and dfs(i + h, j + h, k - h)) {
-          return f[i][j][k] = true;
-        }
-        if (dfs(i + h, j, k - h) and dfs(i, j + k - h, h)) {
-          return f[i][j][k] = true;
-        }
+        if (search(i, j, h) and search(i + h, j + h, k - h)) return result[i][j][k] = true;
+        if (search(i + h, j, k - h) and search(i, j + k - h, h)) return result[i][j][k] = true;
       }
-      return f[i][j][k] = false;
+      return result[i][j][k] = false;
     };
-    return dfs(0, 0, n);
+    return search(0, 0, n);
   }
 };

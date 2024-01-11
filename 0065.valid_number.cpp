@@ -1,11 +1,9 @@
 #include <string>
 
-using std::string;
-
 class Solution {
 public:
-  auto isNumber(string s) {
-    int n = s.size();
+  auto isNumber(const std::string& s) {
+    const int n = s.size();
     int i = 0;
     if (s[i] == '+' or s[i] == '-')
       ++i;

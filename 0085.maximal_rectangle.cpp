@@ -2,44 +2,42 @@
 #include <stack>
 #include <vector>
 
-using std::max;
-using std::stack;
-using std::vector;
-
 class Solution {
 public:
-  auto largestRectangleArea(vector<int> &heights) {
-    int res = 0, n = heights.size();
-    stack<int> stk;
-    vector<int> left(n, -1);
-    vector<int> right(n, n);
-    for (int i = 0; i < n; ++i) {
-      while (!stk.empty() and heights[stk.top()] >= heights[i]) {
-        right[stk.top()] = i;
-        stk.pop();
-      }
-      if (!stk.empty())
-        left[i] = stk.top();
-      stk.push(i);
-    }
-    for (int i = 0; i < n; ++i)
-      res = max(res, heights[i] * (right[i] - left[i] - 1));
-    return res;
-  }
+  auto maximalRectangle(const std::vector<std::vector<char>>& matrix) {
+    const int n = matrix[0].size();
+    std::vector<int> heights(n);
+    int result = 0;
 
-  auto maximalRectangle(vector<vector<char>> &matrix) {
-    int n = matrix[0].size();
-    vector<int> heights(n);
-    int ans = 0;
-    for (auto &row : matrix) {
+    const auto largest = [&]() {
+      int res = 0;
+      const int m = heights.size();
+      std::stack<int> stk;
+      std::vector left(m, -1);
+      std::vector right(m, m);
+      for (int i = 0; i < m; ++i) {
+        while (! stk.empty() and heights[stk.top()] >= heights[i]) {
+          right[stk.top()] = i;
+          stk.pop();
+        }
+        if (! stk.empty())
+          left[i] = stk.top();
+        stk.push(i);
+      }
+      for (int i = 0; i < m; ++i)
+        res = std::max(res, heights[i] * (right[i] - left[i] - 1));
+      return res;
+    };
+
+    for (auto& row: matrix) {
       for (int j = 0; j < n; ++j) {
         if (row[j] == '1')
           ++heights[j];
         else
           heights[j] = 0;
       }
-      ans = max(ans, largestRectangleArea(heights));
+      result = std::max(result, largest());
     }
-    return ans;
+    return result;
   }
 };

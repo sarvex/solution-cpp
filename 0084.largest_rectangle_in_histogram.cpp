@@ -2,28 +2,25 @@
 #include <stack>
 #include <vector>
 
-using std::stack;
-using std::vector;
-using std::max;
-
 class Solution {
 public:
-  auto largestRectangleArea(const vector<int> &heights) {
-    int res = 0, n = heights.size();
-    stack<int> stk;
-    vector<int> left(n, -1);
-    vector<int> right(n, n);
+  auto largestRectangleArea(const std::vector<int>& heights) {
+    int res = 0;
+    const int n = heights.size();
+    std::stack<int> stk;
+    std::vector<int> left(n, -1);
+    std::vector<int> right(n, n);
     for (int i = 0; i < n; ++i) {
-      while (!stk.empty() and heights[stk.top()] >= heights[i]) {
+      while (not stk.empty() and heights[stk.top()] >= heights[i]) {
         right[stk.top()] = i;
         stk.pop();
       }
-      if (!stk.empty())
+      if (not stk.empty())
         left[i] = stk.top();
       stk.push(i);
     }
     for (int i = 0; i < n; ++i)
-      res = max(res, heights[i] * (right[i] - left[i] - 1));
+      res = std::max(res, heights[i] * (right[i] - left[i] - 1));
     return res;
   }
 };

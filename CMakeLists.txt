@@ -2494,6 +2494,7 @@ add_executable(solution
     2999.count_the_number_of_powerful_integers.cpp
     3003.maximize_the_number_of_partitions_after_operations.cpp
     2983.palindrome_rearrangement_queries.cpp
+    0126.word_ladder_ii.cpp
 )
 
 add_executable(0058.length_of_last_word 0058.length_of_last_word.cpp)
