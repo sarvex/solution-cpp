@@ -1,30 +1,49 @@
+#include <functional>
+#include <vector>
+
 class Solution {
 public:
-    int numSubmatrixSumTarget(vector<vector<int>>& matrix, int target) {
-        int m = matrix.size(), n = matrix[0].size();
-        int ans = 0;
-        for (int i = 0; i < m; ++i) {
-            vector<int> col(n);
-            for (int j = i; j < m; ++j) {
-                for (int k = 0; k < n; ++k) {
-                    col[k] += matrix[j][k];
-                }
-                ans += f(col, target);
-            }
+  int numSubmatrixSumTarget(std::vector<std::vector<int>>& matrix, int target) {
+    const auto m = matrix.size(), n = matrix[0].size();
+    int result = 0;
+    for (int l = 0; l < n; l++) {
+      std::vector sums(105, 0);
+      for (int r = l; r < n; r++) {
+        for (int i = 0; i < m; i++) sums[i] += matrix[i][r];
+        for (int i = 0; i < m; i++) {
+          int sum = 0;
+          for (int j = i; j < m; j++) {
+            sum += sums[j];
+            if (sum == target) result++;
+          }
         }
-        return ans;
+      }
     }
+    return result;
+  }
 
-    int f(vector<int>& nums, int target) {
-        unordered_map<int, int> d{{0, 1}};
-        int cnt = 0, s = 0;
-        for (int& x : nums) {
-            s += x;
-            if (d.count(s - target)) {
-                cnt += d[s - target];
-            }
-            ++d[s];
-        }
-        return cnt;
+  auto numSubmatrixSumTarget(const std::vector<std::vector<int>>& matrix, const int target) {
+    const auto m = matrix.size(), n = matrix[0].size();
+    int result = 0;
+
+    const std::function<int(std::vector<int>)> f = [&](const std::vector<int>& nums) {
+      std::unordered_map<int, int> d{ { 0, 1 } };
+      int count = 0, sum = 0;
+      for (auto& num: nums) {
+        sum += num;
+        if (d.contains(sum - target)) count += d[sum - target];
+        ++d[sum];
+      }
+      return count;
+    };
+
+    for (int i = 0; i < m; ++i) {
+      std::vector<int> col(n);
+      for (int j = i; j < m; ++j) {
+        for (int k = 0; k < n; ++k) col[k] += matrix[j][k];
+        result += f(col);
+      }
     }
+    return result;
+  }
 };

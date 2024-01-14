@@ -1,14 +1,17 @@
+#include <vector>
+#include <numeric>
+
 class Solution {
 public:
-    int countVowelStrings(int n) {
-        int f[5] = {1, 1, 1, 1, 1};
-        for (int i = 0; i < n - 1; ++i) {
-            int s = 0;
-            for (int j = 0; j < 5; ++j) {
-                s += f[j];
-                f[j] = s;
-            }
-        }
-        return accumulate(f, f + 5, 0);
+  int countVowelStrings(const int n) {
+    std::vector result{ 1, 1, 1, 1, 1 };
+    for (int i = 0; i < n - 1; ++i) {
+      int sum = 0;
+      for (int j = 0; j < 5; ++j) {
+        sum += result[j];
+        result[j] = sum;
+      }
     }
+    return std::reduce(result.cbegin(), result.cend());
+  }
 };

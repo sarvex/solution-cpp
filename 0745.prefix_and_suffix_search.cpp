@@ -1,26 +1,29 @@
+#include <string>
+#include <unordered_map>
+#include <vector>
+
 class WordFilter {
+  std::unordered_map<std::string, int> dictionary_;
+
 public:
-    unordered_map<string, int> d;
-
-    WordFilter(vector<string>& words) {
-        for (int k = 0; k < words.size(); ++k) {
-            string w = words[k];
-            int n = w.size();
-            for (int i = 0; i <= n; ++i) {
-                string a = w.substr(0, i);
-                for (int j = 0; j <= n; ++j) {
-                    string b = w.substr(j, n - j);
-                    d[a + "." + b] = k;
-                }
-            }
+  explicit WordFilter(const std::vector<std::string>& words) {
+    for (int k = 0; k < words.size(); ++k) {
+      std::string w = words[k];
+      const int n = static_cast<int>(w.size());
+      for (int i = 0; i <= n; ++i) {
+        std::string a = w.substr(0, i);
+        for (int j = 0; j <= n; ++j) {
+          std::string b = w.substr(j, n - j);
+          dictionary_[a + "." + b] = k;
         }
+      }
     }
+  }
 
-    int f(string pref, string suff) {
-        string key = pref + "." + suff;
-        if (d.count(key)) return d[key];
-        return -1;
-    }
+  int f(const std::string& pref, const std::string& suff) {
+    if (const std::string key = pref + "." + suff; dictionary_.contains(key)) return dictionary_[key];
+    return -1;
+  }
 };
 
 /**

@@ -18,18 +18,18 @@ public:
         build(1, 1, n);
     }
 
-    void build(int u, int l, int r) {
-        tr[u]->l = l;
-        tr[u]->r = r;
+    void build(int node, int l, int r) {
+        tr[node]->l = l;
+        tr[node]->r = r;
         if (l == r) {
-            tr[u]->lmx = tr[u]->rmx = tr[u]->mx = tr[u]->size = 1;
-            tr[u]->lc = tr[u]->rc = s[l - 1];
+            tr[node]->lmx = tr[node]->rmx = tr[node]->mx = tr[node]->size = 1;
+            tr[node]->lc = tr[node]->rc = s[l - 1];
             return;
         }
         int mid = (l + r) >> 1;
-        build(u << 1, l, mid);
-        build(u << 1 | 1, mid + 1, r);
-        pushup(u);
+        build(node << 1, l, mid);
+        build(node << 1 | 1, mid + 1, r);
+        pushup(node);
     }
 
     void modify(int u, int x, char v) {

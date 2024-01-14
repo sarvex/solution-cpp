@@ -1,78 +1,70 @@
-class UnionFind {
-public:
-    vector<int> p;
-    int n;
-
-    UnionFind(int _n)
-        : n(_n)
-        , p(_n) {
-        iota(p.begin(), p.end(), 0);
-    }
-
-    bool unite(int a, int b) {
-        int pa = find(a), pb = find(b);
-        if (pa == pb) return false;
-        p[pa] = pb;
-        --n;
-        return true;
-    }
-
-    int find(int x) {
-        if (p[x] != x) p[x] = find(p[x]);
-        return p[x];
-    }
-};
+#include <vector>
+#include <algorithm>
+#include <queue>
 
 class Solution {
 public:
-    int maximumSafenessFactor(vector<vector<int>>& grid) {
-        int n = grid.size();
-        if (grid[0][0] or grid[n - 1][n - 1]) {
-            return 0;
-        }
-        queue<pair<int, int>> q;
-        int dist[n][n];
-        memset(dist, 0x3f, sizeof(dist));
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (grid[i][j]) {
-                    dist[i][j] = 0;
-                    q.emplace(i, j);
-                }
-            }
-        }
-        int dirs[5] = {-1, 0, 1, 0, -1};
-        while (!q.empty()) {
-            auto [i, j] = q.front();
-            q.pop();
-            for (int k = 0; k < 4; ++k) {
-                int x = i + dirs[k], y = j + dirs[k + 1];
-                if (x >= 0 and x < n and y >= 0 and y < n and dist[x][y] == 0x3f3f3f3f) {
-                    dist[x][y] = dist[i][j] + 1;
-                    q.emplace(x, y);
-                }
-            }
-        }
-        vector<tuple<int, int, int>> t;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                t.emplace_back(dist[i][j], i, j);
-            }
-        }
-        sort(t.begin(), t.end());
-        reverse(t.begin(), t.end());
-        UnionFind uf(n * n);
-        for (auto [d, i, j] : t) {
-            for (int k = 0; k < 4; ++k) {
-                int x = i + dirs[k], y = j + dirs[k + 1];
-                if (x >= 0 and x < n and y >= 0 and y < n and dist[x][y] >= d) {
-                    uf.unite(i * n + j, x * n + y);
-                }
-            }
-            if (uf.find(0) == uf.find(n * n - 1)) {
-                return d;
-            }
-        }
-        return 0;
+  int maximumSafenessFactor(const std::vector<std::vector<int>>& grid) {
+    const int n = static_cast<int>(grid.size());
+    if (grid[0][0] == 1 || grid[n - 1][n - 1] == 1) { return 0; }
+
+    const int maxdist = n - 1 << 1;
+    std::vector mindist(n, std::vector<int>(n));
+    mindist[0][0] = (grid[0][0]) ? 0 : maxdist;
+    for (int i = 1; i < n; i++) {
+      mindist[0][i] = grid[0][i] ? 0 : std::min(mindist[0][i - 1] + 1, maxdist);
+      mindist[i][0] = grid[i][0] ? 0 : std::min(mindist[i - 1][0] + 1, maxdist);
     }
+    for (int i = 1; i < n; i++) {
+      for (int j = 1; j < n; j++) {
+        mindist[i][j] = grid[i][j] ? 0 : std::min(mindist[i - 1][j] + 1, mindist[i][j - 1] + 1);
+      }
+    }
+
+    for (int i = n - 2; i >= 0; i--) {
+      mindist[n - 1][i] = std::min(mindist[n - 1][i + 1] + 1, mindist[n - 1][i]);
+      mindist[i][n - 1] = std::min(mindist[i + 1][n - 1] + 1, mindist[i][n - 1]);
+    }
+    for (int i = n - 2; i >= 0; i--) {
+      for (int j = n - 2; j >= 0; j--) {
+        mindist[i][j] = std::min({ mindist[i][j], mindist[i + 1][j] + 1, mindist[i][j + 1] + 1 });
+      }
+    }
+    std::priority_queue<std::pair<int, std::pair<int, int>>> pq;
+    std::vector seen(n, std::vector(n, false));
+    int result = 0;
+    pq.push({ mindist[0][0], { 0, 0 } });
+    seen[0][0] = true;
+
+    while (not pq.empty()) {
+      int val = pq.top().first;
+      int x = pq.top().second.first;
+      int y = pq.top().second.second;
+      pq.pop();
+
+      if (x == n - 1 and y == n - 1) {
+        result = val;
+        break;
+      }
+
+      if (x > 0 and not seen[x - 1][y]) {
+        seen[x - 1][y] = true;
+        pq.push({ std::min(val, mindist[x - 1][y]), { x - 1, y } });
+      }
+      if (y > 0 and not seen[x][y - 1]) {
+        seen[x][y - 1] = true;
+        pq.push({ std::min(val, mindist[x][y - 1]), { x, y - 1 } });
+      }
+      if (x < n - 1 and not seen[x + 1][y]) {
+        seen[x + 1][y] = true;
+        pq.push({ std::min(val, mindist[x + 1][y]), { x + 1, y } });
+      }
+      if (y < n - 1 and not seen[x][y + 1]) {
+        seen[x][y + 1] = true;
+        pq.push({ std::min(val, mindist[x][y + 1]), { x, y + 1 } });
+      }
+    }
+
+    return result;
+  }
 };

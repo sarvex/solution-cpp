@@ -1,54 +1,40 @@
+#include <vector>
+#include <functional>
+
 class Solution {
 public:
-    const vector<int> dirs = {-1, 0, 1, 0, -1};
-    int m, n;
+  auto minDays(std::vector<std::vector<int>>& grid) {
+    const std::vector dirs{ -1, 0, 1, 0, -1 };
+    const auto m = grid.size(), n = grid[0].size();
 
-    int minDays(vector<vector<int>>& grid) {
-        m = grid.size(), n = grid[0].size();
-        if (count(grid) != 1) {
-            return 0;
-        }
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (grid[i][j] == 1) {
-                    grid[i][j] = 0;
-                    if (count(grid) != 1) {
-                        return 1;
-                    }
-                    grid[i][j] = 1;
-                }
-            }
-        }
-        return 2;
-    }
+    const std::function<void(int, int)> search = [&](const int i, const int j) {
+      grid[i][j] = 2;
+      for (int k = 0; k < 4; ++k)
+        if (const int x = i + dirs[k], y = j + dirs[k + 1]; x >= 0 and x < m and y >= 0 and y < n and grid[x][y] == 1)
+          search(x, y);
+    };
 
-    int count(vector<vector<int>>& grid) {
-        int cnt = 0;
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (grid[i][j] == 1) {
-                    dfs(i, j, grid);
-                    ++cnt;
-                }
-            }
-        }
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (grid[i][j] == 2) {
-                    grid[i][j] = 1;
-                }
-            }
-        }
-        return cnt;
-    }
+    const std::function<int()> count = [&]() {
+      int result = 0;
+      for (int i = 0; i < m; ++i)
+        for (int j = 0; j < n; ++j)
+          if (grid[i][j] == 1) {
+            search(i, j);
+            ++result;
+          }
+      for (int i = 0; i < m; ++i) for (int j = 0; j < n; ++j) if (grid[i][j] == 2) grid[i][j] = 1;
+      return result;
+    };
 
-    void dfs(int i, int j, vector<vector<int>>& grid) {
-        grid[i][j] = 2;
-        for (int k = 0; k < 4; ++k) {
-            int x = i + dirs[k], y = j + dirs[k + 1];
-            if (x >= 0 and x < m and y >= 0 and y < n and grid[x][y] == 1) {
-                dfs(x, y, grid);
-            }
+    if (count() != 1) return 0;
+
+    for (int i = 0; i < m; ++i)
+      for (int j = 0; j < n; ++j)
+        if (grid[i][j] == 1) {
+          grid[i][j] = 0;
+          if (count() != 1) return 1;
+          grid[i][j] = 1;
         }
-    }
+    return 2;
+  }
 };

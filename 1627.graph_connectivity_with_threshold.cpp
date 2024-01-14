@@ -7,31 +7,31 @@ using std::iota;
 class UnionFind {
 public:
   UnionFind(int n) {
-    p = vector<int>(n);
+    p_ = vector<int>(n);
     size = vector<int>(n, 1);
-    iota(p.begin(), p.end(), 0);
+    iota(p_.begin(), p_.end(), 0);
   }
 
   bool unite(int a, int b) {
     int pa = find(a), pb = find(b);
     if (pa == pb) { return false; }
     if (size[pa] > size[pb]) {
-      p[pb] = pa;
+      p_[pb] = pa;
       size[pa] += size[pb];
     } else {
-      p[pa] = pb;
+      p_[pa] = pb;
       size[pb] += size[pa];
     }
     return true;
   }
 
   int find(int x) {
-    if (p[x] != x) { p[x] = find(p[x]); }
-    return p[x];
+    if (p_[x] != x) { p_[x] = find(p_[x]); }
+    return p_[x];
   }
 
 private:
-  vector<int> p, size;
+  vector<int> p_, size;
 };
 
 class Solution {

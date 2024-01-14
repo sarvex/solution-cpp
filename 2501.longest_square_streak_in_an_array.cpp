@@ -1,41 +1,24 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+#include <cstdint>
+#include <functional>
+#include <limits>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+
 class Solution {
 public:
-    int countGreatEnoughNodes(TreeNode* root, int k) {
-        int ans = 0;
-        function<priority_queue<int>(TreeNode*)> dfs = [&](TreeNode* root) {
-            if (!root) {
-                return priority_queue<int>();
-            }
-            auto left = dfs(root->left);
-            auto right = dfs(root->right);
-            while (right.size()) {
-                left.push(right.top());
-                right.pop();
-                if (left.size() > k) {
-                    left.pop();
-                }
-            }
-            if (left.size() == k and left.top() < root->val) {
-                ++ans;
-            }
-            left.push(root->val);
-            if (left.size() > k) {
-                left.pop();
-            }
-            return left;
-        };
-        dfs(root);
-        return ans;
-    }
+  auto longestSquareStreak(const std::vector<int>& nums) {
+    const std::unordered_set<int64_t> s(nums.begin(), nums.end());
+    std::unordered_map<int64_t, int64_t> table;
+    int64_t result = 0;
+    std::function<int64_t(int64_t)> search = [&](const int64_t x) {
+      if (not s.contains(x)) return 0;
+      if (table.contains(x)) return table[x];
+      if (x * x > std::numeric_limits<int>::max()) return 1;
+      table[x] = 1 + search(x * x);
+      return table[x];
+    };
+    for (const int& num : nums) result = std::max(result, search(num));
+    return result < 2 ? -1 : static_cast<int>(result);
+  }
 };

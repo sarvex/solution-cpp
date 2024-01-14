@@ -1,15 +1,16 @@
+#include <algorithm>
+#include <vector>
+
 class Solution {
 public:
-    int maxSatisfaction(vector<int>& satisfaction) {
-        sort(rbegin(satisfaction), rend(satisfaction));
-        int ans = 0, s = 0;
-        for (int x : satisfaction) {
-            s += x;
-            if (s <= 0) {
-                break;
-            }
-            ans += s;
-        }
-        return ans;
+  int maxSatisfaction(std::vector<int>& satisfaction) {
+    sort(satisfaction.rbegin(), satisfaction.rend());
+    int result = 0, sum = 0;
+    for (const auto& elem: satisfaction) {
+      sum += elem;
+      if (sum <= 0) break;
+      result += sum;
     }
+    return result;
+  }
 };

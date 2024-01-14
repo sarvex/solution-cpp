@@ -2495,6 +2495,14 @@ add_executable(solution
     3003.maximize_the_number_of_partitions_after_operations.cpp
     2983.palindrome_rearrangement_queries.cpp
     0126.word_ladder_ii.cpp
+    2945.find_maximum_non_decreasing_array_length.cpp
+    1728.cat_and_mouse_ii.cpp
+    0639.decode_ways_ii.cpp
+    1416_restore_the_array.cpp
+    2197.replace_non_co_prime_numbers_in_array.cpp
+    2203.minimum_weighted_subgraph_with_the_required_paths.cpp
+    2065.maximum_path_quality_of_a_graph.cpp
+    1928.minimum_cost_to_reach_destination_in_time.cpp
 )
 
 add_executable(0058.length_of_last_word 0058.length_of_last_word.cpp)

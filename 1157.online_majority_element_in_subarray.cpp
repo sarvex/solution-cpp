@@ -46,18 +46,18 @@ private:
     vector<Node*> tr;
     vector<int> nums;
 
-    void build(int u, int l, int r) {
-        tr[u]->l = l;
-        tr[u]->r = r;
+    void build(int node, int l, int r) {
+        tr[node]->l = l;
+        tr[node]->r = r;
         if (l == r) {
-            tr[u]->x = nums[l - 1];
-            tr[u]->cnt = 1;
+            tr[node]->x = nums[l - 1];
+            tr[node]->cnt = 1;
             return;
         }
         int mid = (l + r) >> 1;
-        build(u << 1, l, mid);
-        build(u << 1 | 1, mid + 1, r);
-        pushup(u);
+        build(node << 1, l, mid);
+        build(node << 1 | 1, mid + 1, r);
+        pushup(node);
     }
 
     void pushup(int u) {

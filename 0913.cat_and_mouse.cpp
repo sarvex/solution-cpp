@@ -1,75 +1,44 @@
-const int HOLE = 0;
-const int MOUSE_START = 1;
-const int CAT_START = 2;
-const int MOUSE_TURN = 0;
-const int CAT_TURN = 1;
-const int MOUSE_WIN = 1;
-const int CAT_WIN = 2;
-const int TIE = 0;
+#include <algorithm>
+#include <queue>
+#include <vector>
 
 class Solution {
 public:
-    int catMouseGame(vector<vector<int>>& graph) {
-        int n = graph.size();
-        int res[n][n][2];
-        int degree[n][n][2];
-        memset(res, 0, sizeof res);
-        memset(degree, 0, sizeof degree);
-        for (int i = 0; i < n; ++i) {
-            for (int j = 1; j < n; ++j) {
-                degree[i][j][MOUSE_TURN] = graph[i].size();
-                degree[i][j][CAT_TURN] = graph[j].size();
-            }
-            for (int j : graph[HOLE]) {
-                --degree[i][j][CAT_TURN];
-            }
-        }
-        auto getPrevStates = [&](int m, int c, int t) {
-            int pt = t ^ 1;
-            vector<tuple<int, int, int>> pre;
-            if (pt == CAT_TURN) {
-                for (int pc : graph[c]) {
-                    if (pc != HOLE) {
-                        pre.emplace_back(m, pc, pt);
-                    }
-                }
-            } else {
-                for (int pm : graph[m]) {
-                    pre.emplace_back(pm, c, pt);
-                }
-            }
-            return pre;
-        };
-        queue<tuple<int, int, int>> q;
-        for (int j = 1; j < n; ++j) {
-            res[0][j][MOUSE_TURN] = res[0][j][CAT_TURN] = MOUSE_WIN;
-            q.emplace(0, j, MOUSE_TURN);
-            q.emplace(0, j, CAT_TURN);
-        }
-        for (int i = 1; i < n; ++i) {
-            res[i][i][MOUSE_TURN] = res[i][i][CAT_TURN] = CAT_WIN;
-            q.emplace(i, i, MOUSE_TURN);
-            q.emplace(i, i, CAT_TURN);
-        }
-        while (not q.empty()) {
-            auto [m, c, t] = q.front();
-            q.pop();
-            int x = res[m][c][t];
-            for (auto [pm, pc, pt] : getPrevStates(m, c, t)) {
-                if (res[pm][pc][pt] == TIE) {
-                    bool win = (x == MOUSE_WIN and pt == MOUSE_TURN) or (x == CAT_WIN and pt == CAT_TURN);
-                    if (win) {
-                        res[pm][pc][pt] = x;
-                        q.emplace(pm, pc, pt);
-                    } else {
-                        if (--degree[pm][pc][pt] == 0) {
-                            res[pm][pc][pt] = x;
-                            q.emplace(pm, pc, pt);
-                        }
-                    }
-                }
-            }
-        }
-        return res[MOUSE_START][CAT_START][MOUSE_TURN];
+  int catMouseGame(const std::vector<std::vector<int>>& graph) {
+    enum class State { draw, mouse, cat };
+    const int n = static_cast<int>(graph.size());
+    std::vector states(n, std::vector(n, std::vector(2, State::draw)));
+    std::vector degrees(n, std::vector(n, std::vector(2, 0)));
+    std::queue<std::tuple<int, int, int, State>> q;
+    for (int cat = 0; cat < n; ++cat) {
+      for (int mouse = 0; mouse < n; ++mouse) {
+        const auto hole = std::count(graph[cat].begin(), graph[cat].end(), 0);
+        degrees[cat][mouse][0] = static_cast<int>(graph[mouse].size());
+        degrees[cat][mouse][1] = static_cast<int>(graph[cat].size()) - static_cast<int>(hole);
+      }
     }
+    for (int cat = 1; cat < n; ++cat)
+      for (int move = 0; move < 2; ++move)
+        q.emplace(cat, 0, move, states[cat][0][move] = State::mouse),
+            q.emplace(cat, cat, move, states[cat][cat][move] = State::cat);
+    while (! q.empty()) {
+      const auto [cat, mouse, move, state] = q.front();
+      q.pop();
+      if ((cat == 2) && (mouse == 1) && (move == 0))
+        return static_cast<int>(state);
+      const int prev_move = move ^ 1;
+      for (const int prev: graph[prev_move ? cat : mouse]) {
+        const int prev_cat = prev_move ? prev : cat;
+        if (prev_cat == 0) continue;
+        const int prev_mouse = prev_move ? mouse : prev;
+        if (states[prev_cat][prev_mouse][prev_move] != State::draw) continue;
+        if (((prev_move == 0) && (state == State::mouse))
+            || ((prev_move == 1) && (state == State::cat))
+            || (--degrees[prev_cat][prev_mouse][prev_move] == 0))
+          states[prev_cat][prev_mouse][prev_move] = state,
+              q.emplace(prev_cat, prev_mouse, prev_move, state);
+      }
+    }
+    return static_cast<int>(states[2][1][0]);
+  }
 };

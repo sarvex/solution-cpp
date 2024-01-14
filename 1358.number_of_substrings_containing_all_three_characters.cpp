@@ -1,12 +1,17 @@
+#include <vector>
+#include <algorithm>
+#include <string>
+
 class Solution {
 public:
-    int numberOfSubstrings(string s) {
-        int d[3] = {-1, -1, -1};
-        int ans = 0;
-        for (int i = 0; i < s.size(); ++i) {
-            d[s[i] - 'a'] = i;
-            ans += min(d[0], min(d[1], d[2])) + 1;
-        }
-        return ans;
+  int numberOfSubstrings(const std::string& s) {
+    const int n = static_cast<int>(s.size());
+    std::vector d{ -1, -1, -1 };
+    int result = 0;
+    for (int i = 0; i < n; ++i) {
+      d[s[i] - 'a'] = i;
+      result += std::min({ d[0], d[1], d[2] }) + 1;
     }
+    return result;
+  }
 };

@@ -19,15 +19,15 @@ public:
 
 class SegmentTree {
 private:
-    Node* root;
+    Node* root_;
 
 public:
     SegmentTree() {
-        root = new Node(1, 100010);
+        root_ = new Node(1, 100010);
     }
 
     void modify(int l, int r, int v) {
-        modify(l, r, v, root);
+        modify(l, r, v, root_);
     }
 
     void modify(int l, int r, int v, Node* node) {
@@ -44,7 +44,7 @@ public:
     }
 
     int query(int l, int r) {
-        return query(l, r, root);
+        return query(l, r, root_);
     }
 
     int query(int l, int r, Node* node) {

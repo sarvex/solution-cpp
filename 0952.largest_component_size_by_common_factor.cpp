@@ -1,11 +1,11 @@
 class UnionFind {
 public:
     vector<int> p;
-    int n;
+    int n_;
 
-    UnionFind(int _n)
-        : n(_n)
-        , p(_n) {
+    UnionFind(int n)
+        : n_(n)
+        , p(n) {
         iota(p.begin(), p.end(), 0);
     }
 

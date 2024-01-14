@@ -37,34 +37,31 @@ public:
 
 class Solution {
 public:
-  vector<int> leftmostBuildingQueries(vector<int> &heights,
-                                      vector<vector<int>> &queries) {
+  vector<int> leftmostBuildingQueries(
+      vector<int>& heights,
+      vector<vector<int>>& queries) {
     int n = heights.size(), m = queries.size();
-    for (auto &q : queries) {
-      if (q[0] > q[1]) {
-        swap(q[0], q[1]);
-      }
-    }
+    for (auto& q: queries) { if (q[0] > q[1]) { swap(q[0], q[1]); } }
     vector<int> idx(m);
     iota(idx.begin(), idx.end(), 0);
-    sort(idx.begin(), idx.end(),
-         [&](int i, int j) { return queries[j][1] < queries[i][1]; });
+    sort(
+        idx.begin(),
+        idx.end(),
+        [&](int i, int j) { return queries[j][1] < queries[i][1]; });
     vector<int> s = heights;
     sort(s.begin(), s.end());
     s.erase(unique(s.begin(), s.end()), s.end());
     vector<int> ans(m);
     int j = n - 1;
     BinaryIndexedTree tree(n);
-    for (int i : idx) {
+    for (int i: idx) {
       int l = queries[i][0], r = queries[i][1];
       while (j > r) {
         int k = s.end() - lower_bound(s.begin(), s.end(), heights[j]) + 1;
         tree.update(k, j);
         --j;
       }
-      if (l == r or heights[l] < heights[r]) {
-        ans[i] = r;
-      } else {
+      if (l == r or heights[l] < heights[r]) { ans[i] = r; } else {
         int k = s.end() - lower_bound(s.begin(), s.end(), heights[l]);
         ans[i] = tree.query(k);
       }

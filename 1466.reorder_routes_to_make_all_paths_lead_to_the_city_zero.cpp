@@ -1,27 +1,28 @@
+#include <functional>
+#include <unordered_map>
+#include <vector>
+
 class Solution {
 public:
-    int minReorder(int n, vector<vector<int>>& connections) {
-        unordered_map<int, vector<pair<int, bool>>> g;
-        for (auto& e : connections) {
-            int u = e[0], v = e[1];
-            g[u].push_back({v, true});
-            g[v].push_back({u, false});
-        }
-        vector<bool> vis(n);
-        return dfs(0, g, vis);
+  int minReorder(const int n, const std::vector<std::vector<int>>& connections) {
+    std::unordered_map<int, std::vector<std::pair<int, bool>>> route;
+    for (auto& connection: connections) {
+      const int fst = connection[0], snd = connection[1];
+      route[fst].emplace_back(snd, true);
+      route[snd].emplace_back(fst, false);
     }
-
-    int dfs(int u, unordered_map<int, vector<pair<int, bool>>>& g, vector<bool>& vis) {
-        vis[u] = true;
-        int ans = 0;
-        for (auto& p : g[u]) {
-            int v = p.first;
-            bool exist = p.second;
-            if (!vis[v]) {
-                if (exist) ++ans;
-                ans += dfs(v, g, vis);
-            }
+    std::vector<bool> seen(n);
+    const std::function<int(int)> search = [&](int city) {
+      seen[city] = true;
+      int result = 0;
+      for (const auto& p: route[city]) {
+        if (const auto& [elem, exist] = p; not seen[elem]) {
+          if (exist) ++result;
+          result += search(elem);
         }
-        return ans;
-    }
+      }
+      return result;
+    };
+    return search(0);
+  }
 };

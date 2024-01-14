@@ -1,16 +1,18 @@
+#include <deque>
+#include <vector>
+
 class Solution {
 public:
-    int maxResult(vector<int>& nums, int k) {
-        int n = nums.size();
-        int f[n];
-        f[0] = 0;
-        deque<int> q = {0};
-        for (int i = 0; i < n; ++i) {
-            if (i - q.front() > k) q.pop_front();
-            f[i] = nums[i] + f[q.front()];
-            while (not q.empty() and f[q.back()] <= f[i]) q.pop_back();
-            q.push_back(i);
-        }
-        return f[n - 1];
+  auto maxResult(const std::vector<int>& nums, const int k) {
+    const auto n = nums.size();
+    std::vector result(n, 0);
+    std::deque q { 0 };
+    for (int i = 0; i < n; ++i) {
+      if (i - q.front() > k) q.pop_front();
+      result[i] = nums[i] + result[q.front()];
+      while (not q.empty() and result[q.back()] <= result[i]) q.pop_back();
+      q.push_back(i);
     }
+    return result[n - 1];
+  }
 };

@@ -1,15 +1,16 @@
+#include <limits>
+#include <vector>
+
 class Solution {
 public:
-    int calculateMinimumHP(vector<vector<int>>& dungeon) {
-        int m = dungeon.size(), n = dungeon[0].size();
-        int dp[m + 1][n + 1];
-        memset(dp, 0x3f, sizeof dp);
-        dp[m][n - 1] = dp[m - 1][n] = 1;
-        for (int i = m - 1; ~i; --i) {
-            for (int j = n - 1; ~j; --j) {
-                dp[i][j] = max(1, min(dp[i + 1][j], dp[i][j + 1]) - dungeon[i][j]);
-            }
-        }
-        return dp[0][0];
-    }
+  auto calculateMinimumHP(const std::vector<std::vector<int>>& dungeon) {
+    const int m = static_cast<int>(dungeon.size()), n = static_cast<int>(dungeon[0].size());
+    std::vector result(m + 1, std::vector(n + 1, std::numeric_limits<int>::max() >> 2));
+    result[m][n - 1] = result[m - 1][n] = 1;
+    for (int i = m - 1; ~i; --i)
+      for (int j = n - 1; ~j; --j) {
+        result[i][j] = std::max(1, std::min(result[i + 1][j], result[i][j + 1]) - dungeon[i][j]);
+      }
+    return result[0][0];
+  }
 };

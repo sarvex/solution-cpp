@@ -1,18 +1,18 @@
 class UnionFind {
 public:
     vector<int> p;
-    int n;
+    int n_;
 
-    UnionFind(int _n)
-        : n(_n)
-        , p(_n) {
+    UnionFind(int n)
+        : n_(n)
+        , p(n) {
         iota(p.begin(), p.end(), 0);
     }
 
     bool unite(int a, int b) {
         if (find(a) == find(b)) return false;
         p[find(a)] = find(b);
-        --n;
+        --n_;
         return true;
     }
 
@@ -42,7 +42,7 @@ public:
                 int x = ne[0], y = ne[1], z = ne[2], j = ne[3];
                 if (j != i and ufa.unite(x, y)) k += z;
             }
-            if (ufa.n > 1 or (ufa.n == 1 and k > v)) {
+            if (ufa.n_ > 1 or (ufa.n_ == 1 and k > v)) {
                 ans[0].push_back(i);
                 continue;
             }

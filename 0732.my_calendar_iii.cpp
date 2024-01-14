@@ -1,97 +1,59 @@
-class Node {
+#include <algorithm>
+#include <limits>
+
+class SegmentTreeNode {
 public:
-    Node* left;
-    Node* right;
-    int l;
-    int r;
-    int mid;
-    int v;
-    int add;
+  int start, end, overlap;
+  SegmentTreeNode* left,* right;
 
-    Node(int l, int r) {
-        this->l = l;
-        this->r = r;
-        this->mid = (l + r) >> 1;
-        this->left = this->right = nullptr;
-        v = add = 0;
+  SegmentTreeNode(int _start, int _end) :
+    start{ _start }, end{ _end }, overlap{ 0 }, left{ nullptr }, right{ nullptr } {}
+
+  int insert(int start_time, int end_time) {
+    if (start_time >= end_time) return 0;
+    if (start_time >= end) {
+      if (right) return right->insert(start_time, end_time);
+      right = new SegmentTreeNode(start_time, end_time);
+    } else if (end_time <= start) {
+      if (left) return left->insert(start_time, end_time);
+      left = new SegmentTreeNode(start_time, end_time);
+    } else {
+      const int x1 = std::min(start_time, start);
+      const int x2 = std::max(start_time, start);
+      const int y1 = std::min(end_time, end);
+      const int y2 = std::max(end_time, end);
+      overlap++;
+      int result = overlap;
+      if (end > end_time) {
+        const auto new_right = new SegmentTreeNode(y1, y2);
+        new_right->overlap = overlap - 1;
+        new_right->right = right;
+        right = new_right;
+      } else { result = std::max(insert(y1, y2), result); }
+      if (start < start_time) {
+        const auto new_left = new SegmentTreeNode(x1, x2);
+        new_left->overlap = overlap - 1;
+        new_left->left = left;
+        left = new_left;
+      } else { result = std::max(insert(x1, x2), result); }
+      start = x2;
+      end = y1;
+      return result;
     }
-};
-
-class SegmentTree {
-private:
-    Node* root;
-
-public:
-    SegmentTree() {
-        root = new Node(1, 1e9 + 1);
-    }
-
-    void modify(int l, int r, int v) {
-        modify(l, r, v, root);
-    }
-
-    void modify(int l, int r, int v, Node* node) {
-        if (l > r) return;
-        if (node->l >= l and node->r <= r) {
-            node->v += v;
-            node->add += v;
-            return;
-        }
-        pushdown(node);
-        if (l <= node->mid) modify(l, r, v, node->left);
-        if (r > node->mid) modify(l, r, v, node->right);
-        pushup(node);
-    }
-
-    int query(int l, int r) {
-        return query(l, r, root);
-    }
-
-    int query(int l, int r, Node* node) {
-        if (l > r) return 0;
-        if (node->l >= l and node->r <= r) return node->v;
-        pushdown(node);
-        int v = 0;
-        if (l <= node->mid) v = max(v, query(l, r, node->left));
-        if (r > node->mid) v = max(v, query(l, r, node->right));
-        return v;
-    }
-
-    void pushup(Node* node) {
-        node->v = max(node->left->v, node->right->v);
-    }
-
-    void pushdown(Node* node) {
-        if (!node->left) node->left = new Node(node->l, node->mid);
-        if (!node->right) node->right = new Node(node->mid + 1, node->r);
-        if (node->add) {
-            Node* left = node->left;
-            Node* right = node->right;
-            left->v += node->add;
-            right->v += node->add;
-            left->add += node->add;
-            right->add += node->add;
-            node->add = 0;
-        }
-    }
+    return 0;
+  }
 };
 
 class MyCalendarThree {
+  SegmentTreeNode tree_;
+  int ret_;
+
 public:
-    SegmentTree* tree;
+  MyCalendarThree() :
+    tree_{ -1, std::numeric_limits<int>::max() }, ret_{ 0 } {}
 
-    MyCalendarThree() {
-        tree = new SegmentTree();
-    }
-
-    int book(int start, int end) {
-        tree->modify(start + 1, end, 1);
-        return tree->query(1, 1e9 + 1);
-    }
+  int book(const int startTime, const int endTime) {
+    ret_ = std::max(ret_, tree_.insert(startTime, endTime));
+    return ret_;
+  }
 };
-
-/**
- * Your MyCalendarThree object will be instantiated and called as such:
- * MyCalendarThree* obj = new MyCalendarThree();
- * int param_1 = obj->book(start,end);
- */

@@ -1,24 +1,23 @@
+#include <functional>
+#include <vector>
+
 class Solution {
 public:
-    int findCircleNum(vector<vector<int>>& isConnected) {
-        int n = isConnected.size();
-        int ans = 0;
-        bool vis[n];
-        memset(vis, false, sizeof(vis));
-        function<void(int)> dfs = [&](int i) {
-            vis[i] = true;
-            for (int j = 0; j < n; ++j) {
-                if (!vis[j] and isConnected[i][j]) {
-                    dfs(j);
-                }
-            }
-        };
-        for (int i = 0; i < n; ++i) {
-            if (!vis[i]) {
-                dfs(i);
-                ++ans;
-            }
-        }
-        return ans;
+  int findCircleNum(const std::vector<std::vector<int>>& isConnected) {
+    const int n = isConnected.size();
+    int result = 0;
+    std::vector seen(n, false);
+    const std::function<void(int)> search = [&](const int i) {
+      seen[i] = true;
+      for (int j = 0; j < n; ++j)if (not seen[j] and isConnected[i][j]) search(j);
+    };
+
+    for (int i = 0; i < n; ++i) {
+      if (not seen[i]) {
+        search(i);
+        ++result;
+      }
     }
+    return result;
+  }
 };

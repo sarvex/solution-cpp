@@ -1,12 +1,13 @@
+#include <string>
+#include <vector>
+
 class Solution {
 public:
-    int minSteps(string s, string t) {
-        int cnt[26]{};
-        for (char& c : s) ++cnt[c - 'a'];
-        int ans = 0;
-        for (char& c : t) {
-            ans += --cnt[c - 'a'] < 0;
-        }
-        return ans;
-    }
+  auto minSteps(const std::string& s, const std::string& t) {
+    std::vector count(26, 0);
+    for (auto& c: s) ++count[c - 'a'];
+    int result = 0;
+    for (auto& c: t) { result += --count[c - 'a'] < 0; }
+    return result;
+  }
 };

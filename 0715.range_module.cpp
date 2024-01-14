@@ -39,13 +39,13 @@ public:
 
 class SegmentTree {
 private:
-  Node *root;
+  Node *root_;
 
 public:
-  SegmentTree() { root = new Node(); }
+  SegmentTree() { root_ = new Node(); }
 
   void modify(int left, int right, int v) {
-    modify(left, right, v, 1, 1e9, root);
+    modify(left, right, v, 1, 1e9, root_);
   }
 
   void modify(int left, int right, int v, int l, int r, Node *node) {
@@ -63,7 +63,7 @@ public:
     pushup(node);
   }
 
-  bool query(int left, int right) { return query(left, right, 1, 1e9, root); }
+  bool query(int left, int right) { return query(left, right, 1, 1e9, root_); }
 
   bool query(int left, int right, int l, int r, Node *node) {
     if (l >= left and r <= right)

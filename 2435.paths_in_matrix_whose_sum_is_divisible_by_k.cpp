@@ -1,20 +1,19 @@
+#include <vector>
+
 class Solution {
 public:
-    int numberOfPaths(vector<vector<int>>& grid, int k) {
-        int m = grid.size(), n = grid[0].size();
-        int mod = 1e9 + 7;
-        vector<vector<vector<int>>> f(m, vector<vector<int>>(n, vector<int>(k, -1)));
-        function<int(int, int, int)> dfs;
-        dfs = [&](int i, int j, int s) {
-            if (i < 0 or i >= m or j < 0 or j >= n) return 0;
-            s = (s + grid[i][j]) % k;
-            if (i == m - 1 and j == n - 1) return s == 0 ? 1 : 0;
-            if (f[i][j][s] != -1) return f[i][j][s];
-            int ans = dfs(i + 1, j, s) + dfs(i, j + 1, s);
-            ans %= mod;
-            f[i][j][s] = ans;
-            return ans;
-        };
-        return dfs(0, 0, 0);
-    }
+  auto numberOfPaths(std::vector<std::vector<int>>& grid, const int k) {
+    const auto n = grid.size(), m = grid[0].size();
+    std::vector result(n, std::vector(m, std::vector(k, 0LL)));
+    result[0][0][grid[0][0] % k] = 1;
+    for (int i = 1; i < n; i++) for (int j = 0; j < k; j++) result[i][0][(j + grid[i][0]) % k] = result[i - 1][0][j];
+    for (int i = 1; i < m; i++) for (int j = 0; j < k; j++) result[0][i][(j + grid[0][i]) % k] = result[0][i - 1][j];
+
+    for (int i = 1; i < n; i++)
+      for (int j = 1; j < m; j++)
+        for (int l = 0; l < k; l++)
+          result[i][j][(l + grid[i][j]) % k] = (result[i - 1][j][l] + result[i][j - 1][l]) % 1000000007;
+
+    return static_cast<int>(result[n - 1][m - 1][0]);
+  }
 };

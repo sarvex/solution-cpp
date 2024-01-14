@@ -1,14 +1,17 @@
+#include <cstdint>
+#include <queue>
+
 class Solution {
 public:
-    long long maxKelements(vector<int>& nums, int k) {
-        priority_queue<int> pq(nums.begin(), nums.end());
-        long long ans = 0;
-        while (k--) {
-            int v = pq.top();
-            pq.pop();
-            ans += v;
-            pq.push((v + 2) / 3);
-        }
-        return ans;
+  auto maxKelements(const std::vector<int>& nums, const int k) {
+    std::priority_queue que(nums.begin(), nums.end());
+    int64_t result = 0;
+    for (int i = k; i; --i) {
+      const int value = que.top();
+      que.pop();
+      result += value;
+      que.push((value + 2) / 3);
     }
+    return result;
+  }
 };

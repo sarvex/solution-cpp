@@ -1,17 +1,16 @@
+#include <deque>
+
 class RecentCounter {
 public:
-    deque<int> q;
+  std::deque<int> q;
 
-    RecentCounter() {
-    }
+  RecentCounter() = default;
 
-    int ping(int t) {
-        q.push_back(t);
-        while (q.front() < t - 3000) {
-            q.pop_front();
-        }
-        return q.size();
-    }
+  int ping(int t) {
+    q.push_back(t);
+    for (const int n = t - 3000; q.front() < n;) q.pop_front();
+    return q.size();
+  }
 };
 
 /**

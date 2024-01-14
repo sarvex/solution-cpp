@@ -16,13 +16,13 @@ public:
         build(1, 0, n - 1);
     }
 
-    void build(int u, int l, int r) {
-        tr[u]->l = l;
-        tr[u]->r = r;
+    void build(int node, int l, int r) {
+        tr[node]->l = l;
+        tr[node]->r = r;
         if (l != r) {
             int mid = (l + r) >> 1;
-            build(u << 1, l, mid);
-            build(u << 1 | 1, mid + 1, r);
+            build(node << 1, l, mid);
+            build(node << 1 | 1, mid + 1, r);
         }
     }
 

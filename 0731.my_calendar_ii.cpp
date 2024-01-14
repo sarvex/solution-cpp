@@ -1,24 +1,25 @@
+#include <map>
+
 class MyCalendarTwo {
 public:
-    map<int, int> m;
+  std::map<int, int> m;
 
-    MyCalendarTwo() {
-    }
+  MyCalendarTwo() = default;
 
-    bool book(int start, int end) {
-        ++m[start];
-        --m[end];
-        int s = 0;
-        for (auto& [_, v] : m) {
-            s += v;
-            if (s > 2) {
-                --m[start];
-                ++m[end];
-                return false;
-            }
-        }
-        return true;
+  bool book(const int start, const int end) {
+    ++m[start];
+    --m[end];
+    int s = 0;
+    for (auto& [_, v]: m) {
+      s += v;
+      if (s > 2) {
+        --m[start];
+        ++m[end];
+        return false;
+      }
     }
+    return true;
+  }
 };
 
 /**

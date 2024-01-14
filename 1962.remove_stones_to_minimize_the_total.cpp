@@ -1,18 +1,20 @@
+#include <queue>
+#include <vector>
+
 class Solution {
 public:
-    int minStoneSum(vector<int>& piles, int k) {
-        priority_queue<int> q;
-        for (int& p : piles) q.push(p);
-        while (k--) {
-            int p = q.top();
-            q.pop();
-            q.push((p + 1) >> 1);
-        }
-        int ans = 0;
-        while (!q.empty()) {
-            ans += q.top();
-            q.pop();
-        }
-        return ans;
+  auto minStoneSum(const std::vector<int>& piles, const int k) {
+    std::priority_queue que{piles.cbegin(), piles.cend()};
+    for (auto i = k; i; --i) {
+      const int p = que.top();
+      que.pop();
+      que.push((p + 1) >> 1);
     }
+    int result = 0;
+    while (not que.empty()) {
+      result += que.top();
+      que.pop();
+    }
+    return result;
+  }
 };
