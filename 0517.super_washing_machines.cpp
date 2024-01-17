@@ -1,19 +1,21 @@
+#include <numeric>
+#include <vector>
+#include <cstdlib>
+
 class Solution {
 public:
-    int findMinMoves(vector<int>& machines) {
-        int n = machines.size();
-        int s = accumulate(machines.begin(), machines.end(), 0);
-        if (s % n) {
-            return -1;
-        }
-        int k = s / n;
-        s = 0;
-        int ans = 0;
-        for (int x : machines) {
-            x -= k;
-            s += x;
-            ans = max({ans, abs(s), x});
-        }
-        return ans;
+  auto findMinMoves(const std::vector<int>& machines) {
+    const auto n = static_cast<int>(machines.size());
+    int s = std::reduce(machines.begin(), machines.end());
+    if (s % n) return -1;
+    const int k = s / n;
+    s = 0;
+    int result = 0;
+    for (int x: machines) {
+      x -= k;
+      s += x;
+      result = std::max({ result, std::abs(s), x });
     }
+    return result;
+  }
 };

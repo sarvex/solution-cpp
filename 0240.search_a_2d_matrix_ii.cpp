@@ -1,15 +1,15 @@
+#include <vector>
+
 class Solution {
 public:
-    bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        int m = matrix.size(), n = matrix[0].size();
-        int i = m - 1, j = 0;
-        while (i >= 0 and j < n) {
-            if (matrix[i][j] == target) return true;
-            if (matrix[i][j] > target)
-                --i;
-            else
-                ++j;
-        }
-        return false;
+  auto searchMatrix(const std::vector<std::vector<int>>& matrix, const int target) {
+    const auto m = static_cast<int>(matrix.size()), n = static_cast<int>(matrix[0].size());
+
+    for (int j = 0, i = m - 1; i >= 0 and j < n;) {
+      if (matrix[i][j] == target) return true;
+      if (matrix[i][j] > target) --i;
+      else ++j;
     }
+    return false;
+  }
 };

@@ -2503,6 +2503,12 @@ add_executable(solution
     2203.minimum_weighted_subgraph_with_the_required_paths.cpp
     2065.maximum_path_quality_of_a_graph.cpp
     1928.minimum_cost_to_reach_destination_in_time.cpp
+    1591.strange_printer_ii.cpp
+    2223.sum_of_scores_of_built_string.cpp
+    2916.subarray_distinct_element_sum_of_squares_ii.cpp
+    3008.find-beautiful-indices-in-the-given-array-ii.cpp
+    2902.count-of-sub-multisets-with-bounded-sum.cpp
+    2902.count-of-sub-multisets-with-bounded-sum.cpp
 )
 
 add_executable(0058.length_of_last_word 0058.length_of_last_word.cpp)
