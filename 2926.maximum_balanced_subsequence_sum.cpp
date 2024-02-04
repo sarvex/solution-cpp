@@ -1,49 +1,49 @@
+#include <algorithm>
+#include <vector>
+
 class BinaryIndexedTree {
-private:
-    int n_;
-    vector<long long> c;
-    const long long inf = 1e18;
+  int n_;
+  std::vector<long long> c_;
+  constexpr long long inf_ = 1e18;
 
 public:
-    BinaryIndexedTree(int n) {
-        this->n_ = n;
-        c.resize(n + 1, -inf);
-    }
+  explicit BinaryIndexedTree(int n) {
+    this->n_ = n;
+    c_.resize(n + 1, -inf_);
+  }
 
-    void update(int x, long long v) {
-        while (x <= n_) {
-            c[x] = max(c[x], v);
-            x += x & -x;
-        }
+  void update(int x, const long long v) {
+    while (x <= n_) {
+      c_[x] = std::max(c_[x], v);
+      x += x & -x;
     }
+  }
 
-    long long query(int x) {
-        long long mx = -inf;
-        while (x > 0) {
-            mx = max(mx, c[x]);
-            x -= x & -x;
-        }
-        return mx;
+  long long query(int x) {
+    long long mx = -inf_;
+    while (x > 0) {
+      mx = std::max(mx, c_[x]);
+      x -= x & -x;
     }
+    return mx;
+  }
 };
 
 class Solution {
 public:
-    long long maxBalancedSubsequenceSum(vector<int>& nums) {
-        int n = nums.size();
-        vector<int> arr(n);
-        for (int i = 0; i < n; ++i) {
-            arr[i] = nums[i] - i;
-        }
-        sort(arr.begin(), arr.end());
-        arr.erase(unique(arr.begin(), arr.end()), arr.end());
-        int m = arr.size();
-        BinaryIndexedTree tree(m);
-        for (int i = 0; i < n; ++i) {
-            int j = lower_bound(arr.begin(), arr.end(), nums[i] - i) - arr.begin() + 1;
-            long long v = max(tree.query(j), 0LL) + nums[i];
-            tree.update(j, v);
-        }
-        return tree.query(m);
+  long long maxBalancedSubsequenceSum(const std::vector<int>& nums) {
+    const auto n = nums.size();
+    std::vector<int> arr(n);
+    for (int i = 0; i < n; ++i) { arr[i] = nums[i] - i; }
+    std::ranges::sort(arr);
+    arr.erase(std::ranges::unique(arr).begin(), arr.end());
+    const int m = static_cast<int>(arr.size());
+    BinaryIndexedTree tree(m);
+    for (int i = 0; i < n; ++i) {
+      int j = std::ranges::lower_bound(arr, nums[i] - i) - arr.begin() + 1;
+      const long long v = std::max(tree.query(j), 0LL) + nums[i];
+      tree.update(j, v);
     }
+    return tree.query(m);
+  }
 };

@@ -6,7 +6,7 @@ AlignOperands: AlignAfterOperator
 AlignTrailingComments: false
 AllowShortBlocksOnASingleLine: Always
 AllowShortCaseLabelsOnASingleLine: true
-AllowShortCompoundRequirementOnASingleLine: true
+#AllowShortCompoundRequirementOnASingleLine: true
 AllowShortIfStatementsOnASingleLine: AllIfsAndElse
 AllowShortLoopsOnASingleLine: true
 AlwaysBreakAfterDefinitionReturnType: None
@@ -44,7 +44,7 @@ IncludeCategories:
   - Regex: ".*"
     Priority: 3
 IncludeIsMainRegex: "([-_](test|unittest))?$"
-IndentAccessModifiers: true
+IndentAccessModifiers: false
 IndentCaseLabels: true
 InsertNewlineAtEOF: true
 LineEnding: LF

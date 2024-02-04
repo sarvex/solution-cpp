@@ -2,7 +2,7 @@ class Solution {
 public:
     // Encodes a URL to a shortened URL.
     string encode(string longUrl) {
-        string v = to_string(++idx);
+        string v = to_string(++idx_);
         m[v] = longUrl;
         return domain + v;
     }
@@ -15,7 +15,7 @@ public:
 
 private:
     unordered_map<string, string> m;
-    int idx = 0;
+    int idx_ = 0;
     string domain = "https://tinyurl.com/";
 };
 

@@ -1,40 +1,37 @@
+#include <stack>
+
 class MyQueue {
 public:
-    MyQueue() {
-    }
+  MyQueue() = default;
 
-    void push(int x) {
-        stk1.push(x);
-    }
+  void push(const int x) { stk1_.push(x); }
 
-    int pop() {
-        move();
-        int ans = stk2.top();
-        stk2.pop();
-        return ans;
-    }
+  int pop() {
+    move();
+    const int result = stk2_.top();
+    stk2_.pop();
+    return result;
+  }
 
-    int peek() {
-        move();
-        return stk2.top();
-    }
+  int peek() {
+    move();
+    return stk2_.top();
+  }
 
-    bool empty() {
-        return stk1.empty() and stk2.empty();
-    }
+  [[nodiscard]] bool empty() const { return stk1_.empty() and stk2_.empty(); }
 
 private:
-    stack<int> stk1;
-    stack<int> stk2;
+  std::stack<int> stk1_;
+  std::stack<int> stk2_;
 
-    void move() {
-        if (stk2.empty()) {
-            while (!stk1.empty()) {
-                stk2.push(stk1.top());
-                stk1.pop();
-            }
-        }
+  void move() {
+    if (stk2_.empty()) {
+      while (! stk1_.empty()) {
+        stk2_.push(stk1_.top());
+        stk1_.pop();
+      }
     }
+  }
 };
 
 /**

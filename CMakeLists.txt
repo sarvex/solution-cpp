@@ -2509,6 +2509,9 @@ add_executable(solution
     3008.find-beautiful-indices-in-the-given-array-ii.cpp
     2902.count-of-sub-multisets-with-bounded-sum.cpp
     2902.count-of-sub-multisets-with-bounded-sum.cpp
+    3017.count-the-number-of-houses-at-a-certain-distance-ii.cpp
+    2966.divide-array-into-arrays-with-max-difference.cpp
+    2977.minimum-cost-to-convert-string-ii.cpp
 )
 
 add_executable(0058.length_of_last_word 0058.length_of_last_word.cpp)

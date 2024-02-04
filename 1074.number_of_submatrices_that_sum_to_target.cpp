@@ -3,10 +3,10 @@
 
 class Solution {
 public:
-  int numSubmatrixSumTarget(std::vector<std::vector<int>>& matrix, int target) {
+  auto numSubmatrixSumTargetFast(const std::vector<std::vector<int>>& matrix, const int target) {
     const auto m = matrix.size(), n = matrix[0].size();
     int result = 0;
-    for (int l = 0; l < n; l++) {
+    for (int l = 0; l < n; ++l) {
       std::vector sums(105, 0);
       for (int r = l; r < n; r++) {
         for (int i = 0; i < m; i++) sums[i] += matrix[i][r];
@@ -27,7 +27,7 @@ public:
     int result = 0;
 
     const std::function<int(std::vector<int>)> f = [&](const std::vector<int>& nums) {
-      std::unordered_map<int, int> d{ { 0, 1 } };
+      std::unordered_map<int, int> d { { 0, 1 } };
       int count = 0, sum = 0;
       for (auto& num: nums) {
         sum += num;

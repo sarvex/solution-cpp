@@ -9,7 +9,7 @@ public:
     for (auto& c: t) map[c]++;
 
     int counter = t.size(), begin = 0, end = 0, distance = std::numeric_limits<int>::max(), head = 0;
-    const auto n = s.size();;
+    const auto n = s.size();
     while (end < n) {
       if (map[s[end++]]-- > 0) { counter--; }
       while (counter == 0) {
