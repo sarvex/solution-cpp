@@ -1,14 +1,14 @@
 class BinaryIndexedTree {
 public:
-    int n_;
+    int size_;
     vector<int> c;
 
     BinaryIndexedTree(int n)
-        : n_(n)
+        : size_(n)
         , c(n + 1) {}
 
     void update(int x, int delta) {
-        while (x <= n_) {
+        while (x <= size_) {
             c[x] += delta;
             x += lowbit(x);
         }

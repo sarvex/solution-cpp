@@ -2,18 +2,18 @@
 #include <vector>
 
 class BinaryIndexedTree {
-  int n_;
+  int size_;
   std::vector<long long> c_;
   constexpr long long inf_ = 1e18;
 
 public:
   explicit BinaryIndexedTree(int n) {
-    this->n_ = n;
+    this->size_ = n;
     c_.resize(n + 1, -inf_);
   }
 
   void update(int x, const long long v) {
-    while (x <= n_) {
+    while (x <= size_) {
       c_[x] = std::max(c_[x], v);
       x += x & -x;
     }

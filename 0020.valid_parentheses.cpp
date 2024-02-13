@@ -9,8 +9,8 @@ public:
     for (char c: s) {
       if (c == '(' or c == '[' or c == '{') brackets.push(c);
       else {
-        if (brackets.empty() or (c == ')' and brackets.top() != '(') or (c == '}' and brackets.top() != '{')
-            or (c == ']' and brackets.top() != '['))
+        if (brackets.empty() or (c == ')' and brackets.top() != '(') or (c == '}' and brackets.top() != '{') or
+            (c == ']' and brackets.top() != '['))
           return false;
         brackets.pop();
       }

@@ -3,24 +3,19 @@
 #include <unordered_map>
 #include <vector>
 
-using std::string;
-using std::unordered_map;
-using std::vector;
-using std::ranges::sort;
-
 class Solution {
 public:
-  auto groupAnagrams(vector<string> &strs) {
-    unordered_map<string, vector<string>> d;
-    for (auto &s : strs) {
-      string k = s;
-      sort(k);
-      d[k].emplace_back(s);
+  auto groupAnagrams(const std::vector<std::string> &strs) {
+    std::unordered_map<std::string, std::vector<std::string>> map;
+    for (auto& str: strs) {
+      std::string index = str;
+      std::ranges::sort(index);
+      map[index].emplace_back(str);
     }
-    vector<vector<string>> result;
-    result.reserve(d.size());
-    for (auto &[_, v] : d)
-      result.emplace_back(v);
+    std::vector<std::vector<std::string>> result;
+    result.reserve(map.size());
+    for (auto &[_, v] : map)
+      result.emplace_back(std::move(v));
     return result;
   }
 };

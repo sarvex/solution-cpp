@@ -2,17 +2,17 @@
 #include <vector>
 
 class BinaryIndexedTree {
-  int n_;
-  std::vector<int> c_;
+  int size_;
+  std::vector<int> children_;
 
 public:
   explicit BinaryIndexedTree(const int n) :
-    n_(n)
-    , c_(n + 1) {}
+    size_(n)
+    , children_(n + 1) {}
 
   void update(int x, const int v) {
-    while (x <= n_) {
-      c_[x] = std::max(c_[x], v);
+    while (x <= size_) {
+      children_[x] = std::max(children_[x], v);
       x += x & -x;
     }
   }
@@ -20,7 +20,7 @@ public:
   int query(int x) {
     int mx = 0;
     while (x) {
-      mx = std::max(mx, c_[x]);
+      mx = std::max(mx, children_[x]);
       x -= x & -x;
     }
     return mx;

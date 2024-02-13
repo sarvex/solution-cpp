@@ -1,17 +1,18 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
 class Solution {
 public:
-    string firstPalindrome(vector<string>& words) {
-        for (auto& w : words) {
-            bool ok = true;
-            for (int i = 0, j = w.size() - 1; i < j; ++i, --j) {
-                if (w[i] != w[j]) {
-                    ok = false;
-                }
-            }
-            if (ok) {
-                return w;
-            }
-        }
-        return "";
-    }
+  Solution() {
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+  }
+
+  auto firstPalindrome(const std::vector<std::string>& words) -> std::string {
+    const auto& result = find_if(cbegin(words), cend(words), [](const auto& word) {
+      return equal(cbegin(word), cbegin(word) + size(word) / 2, crbegin(word));
+    });
+    return result == cend(words) ? "" : *result;
+  }
 };

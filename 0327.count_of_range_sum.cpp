@@ -1,11 +1,11 @@
 class BinaryIndexedTree {
 public:
     BinaryIndexedTree(int n)
-        : n_(n)
+        : size_(n)
         , c(n + 1) {}
 
     void update(int x, int v) {
-        while (x <= n_) {
+        while (x <= size_) {
             c[x] += v;
             x += x & -x;
         }
@@ -21,7 +21,7 @@ public:
     }
 
 private:
-    int n_;
+    int size_;
     vector<int> c;
 };
 

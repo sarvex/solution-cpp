@@ -1,16 +1,13 @@
-﻿class Solution {
+﻿#include <string>
+#include <vector>
+
+class Solution {
 public:
-    int firstUniqChar(string s) {
-        int cnt[26]{};
-        for (char& c : s) {
-            ++cnt[c - 'a'];
-        }
-        int n = s.size();
-        for (int i = 0; i < n; ++i) {
-            if (cnt[s[i] - 'a'] == 1) {
-                return i;
-            }
-        }
-        return -1;
-    }
+  int firstUniqChar(const std::string& s) {
+    std::vector cnt(26, 0);
+    for (auto& c: s) ++cnt[c - 'a'];
+    const auto n = s.size();
+    for (int i = 0; i < n; ++i) if (cnt[s[i] - 'a'] == 1) return i;
+    return -1;
+  }
 };
