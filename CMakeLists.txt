@@ -2512,6 +2512,9 @@ add_executable(solution
     3017.count-the-number-of-houses-at-a-certain-distance-ii.cpp
     2966.divide-array-into-arrays-with-max-difference.cpp
     2977.minimum-cost-to-convert-string-ii.cpp
+    2971.find-polygon-with-the-largest-perimeter.cpp
+    1481.least-number-of-unique-integers-after-k-removals.cpp
+    0273.integer-to-english-words.cpp
 )
 
 add_executable(0058.length_of_last_word 0058.length_of_last_word.cpp)
