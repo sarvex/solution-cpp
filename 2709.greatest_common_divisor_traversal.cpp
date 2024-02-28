@@ -1,75 +1,48 @@
-int MX = 100010;
-vector<int> P[100010];
-
-int init = []() {
-    for (int x = 1; x < MX; ++x) {
-        int v = x;
-        int i = 2;
-        while (i <= v / i) {
-            if (v % i == 0) {
-                P[x].push_back(i);
-                while (v % i == 0) {
-                    v /= i;
-                }
-            }
-            ++i;
-        }
-        if (v > 1) {
-            P[x].push_back(v);
-        }
-    }
-    return 0;
-}();
-
-class UnionFind {
-public:
-    UnionFind(int n) {
-        p = vector<int>(n);
-        size = vector<int>(n, 1);
-        iota(p.begin(), p.end(), 0);
-    }
-
-    bool unite(int a, int b) {
-        int pa = find(a), pb = find(b);
-        if (pa == pb) {
-            return false;
-        }
-        if (size[pa] > size[pb]) {
-            p[pb] = pa;
-            size[pa] += size[pb];
-        } else {
-            p[pa] = pb;
-            size[pb] += size[pa];
-        }
-        return true;
-    }
-
-    int find(int x) {
-        if (p[x] != x) {
-            p[x] = find(p[x]);
-        }
-        return p[x];
-    }
-
-private:
-    vector<int> p, size;
-};
+#include <functional>
+#include <unordered_map>
 
 class Solution {
 public:
-    bool canTraverseAllPairs(vector<int>& nums) {
-        int m = *max_element(nums.begin(), nums.end());
-        int n = nums.size();
-        UnionFind uf(m + n + 1);
-        for (int i = 0; i < n; ++i) {
-            for (int j : P[nums[i]]) {
-                uf.unite(i, j + n);
-            }
+  auto canTraverseAllPairs(const std::vector<int>& nums) {
+    std::unordered_map<int, std::vector<int>> prime_index;
+    std::unordered_map<int, std::vector<int>> index_prime;
+
+    std::vector visited_index(nums.size(), 0);
+    std::unordered_map<int, bool> visited_prime;
+
+    const std::function<void(int)> search = [&](const int index) {
+      if (visited_index[index] == true) return;
+      visited_index[index] = true;
+
+      for (auto& prime: index_prime[index]) {
+        if (visited_prime[prime] == true) continue;
+        visited_prime[prime] = true;
+        for (const auto& elem: prime_index[prime]) {
+          if (visited_index[elem] == true) continue;
+          search(elem);
         }
-        unordered_set<int> s;
-        for (int i = 0; i < n; ++i) {
-            s.insert(uf.find(i));
+      }
+    };
+
+    for (int i = 0; i < nums.size(); i++) {
+      int temp = nums[i];
+      for (int j = 2; j * j <= nums[i]; j++) {
+        if (temp % j == 0) {
+          prime_index[j].push_back(i);
+          index_prime[i].push_back(j);
+          while (temp % j == 0) temp /= j;
         }
-        return s.size() == 1;
+      }
+      if (temp > 1) {
+        prime_index[temp].push_back(i);
+        index_prime[i].push_back(temp);
+      }
     }
+
+    search(0);
+
+    for (const int index : visited_index)
+      if (index == false) return false;
+    return true;
+  }
 };

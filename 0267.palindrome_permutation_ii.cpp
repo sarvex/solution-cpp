@@ -16,11 +16,11 @@ public:
                 mid += k;
             }
         }
-        dfs(mid);
+        search(mid);
         return ans;
     }
 
-    void dfs(string t) {
+    void search(string t) {
         if (t.size() == n) {
             ans.push_back(t);
             return;
@@ -28,7 +28,7 @@ public:
         for (auto& [k, v] : cnt) {
             if (v > 1) {
                 v -= 2;
-                dfs(k + t + k);
+                search(k + t + k);
                 v += 2;
             }
         }
